@@ -3,13 +3,15 @@ import { useAuth } from "./modules/shared/hooks/AuthContext";
 
 export const AdminRoute = () => {
   const { userRole } = useAuth();
-
   const location = useLocation();
 
-  if (userRole === "admin") {
-    return <Outlet />;
+  if (!userRole) {
+    return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
-  // Redirect non-admins to login with state
-  return <Navigate to="/signin" state={{ from: location }} replace />;
+  return userRole === "admin" ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/" state={{ from: location }} replace />
+  );
 };

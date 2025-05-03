@@ -5,7 +5,9 @@ import { SignUpPage } from "./modules/auth/signup/SignUpPage";
 import { Toast } from "primereact/toast";
 import { useEffect, useRef } from "react";
 import { AdminRoute } from "./AdminRoute";
+import { Layout } from "./modules/Admin/Layout";
 import { AdminDashboard } from "./modules/Admin/AdminDashboard";
+import { UsersPage } from "./modules/Admin/Pages/Users/UsersPage";
 
 function App() {
   useEffect(() => {
@@ -44,16 +46,21 @@ function App() {
         {/* Public routes */}
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
-
         <Route element={<AdminRoute />}>
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="admin" element={<Layout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="admin" element={<AdminDashboard />} />
+            <Route path="users" element={<UsersPage />} />
+            {/* <Route path="meals" element={<AdminDashboard />} />
+            <Route path="plans" element={<AdminDashboard />} />
+            <Route path="maintenance" element={<AdminDashboard />} /> */}
+          </Route>
         </Route>
         {/* Protected routes */}
         <Route element={<PrivateRoutes />}>
           {/* <Route path="/" element={<HomePage />} /> */}
           {/* <Route path="/dashboard" element={<DashboardPage />} />  */}
         </Route>
-
         {/* Catch-all route */}
         <Route path="*" element={<Navigate to="/signin" />} />
       </Routes>

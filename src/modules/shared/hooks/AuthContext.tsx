@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { authApi, AuthResponse, User, UserRole } from "../../../api/auth/auth";
 
-type AuthContextType = {
+export type AuthContextType = {
   user: string | null;
   userRole: UserRole | null;
   login: (email: string, password: string) => Promise<AuthResponse>;

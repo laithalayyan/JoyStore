@@ -1,8 +1,7 @@
-import { Button } from "primereact/button";
-import { useAuth } from "../shared/hooks/AuthContext";
-import { useLanguage } from "../shared/hooks/LanguageContext";
+import { useAuth } from "../../../shared/hooks/AuthContext";
+import { useLanguage } from "../../../shared/hooks/LanguageContext";
 
-export const AdminDashboard = () => {
+export const UsersPage = () => {
   const { userRole, user } = useAuth();
   const { t } = useLanguage();
 
@@ -17,13 +16,7 @@ export const AdminDashboard = () => {
         <p className="text-lg">
           {t.welcomeAdmin} {user}
         </p>
-        <div className="mt-4">
-          {/* Admin-specific content */}
-          <Button
-            label={t.manageUsers}
-            className="!bg-primary-500 hover:!bg-primary-600"
-          />
-        </div>
+        <div className="mt-4">{/* Admin-specific content */}</div>
       </div>
     </div>
   );
