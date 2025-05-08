@@ -1,51 +1,81 @@
+import React, { useMemo } from "react";
 import { useAuth } from "../../shared/hooks/AuthContext";
-import { SidebarItem } from "./components/SidebarItem";
+import { Logo } from "./components/Logo";
+import { SidebarNav, SidebarLinkInfo } from "./components/SidebarNav";
+import { useLanguage } from "../../shared/hooks/LanguageContext";
 
-type SidebarLink = {
-  to: string;
-  label: string;
-  icon: string;
+type AppSidebarLink = SidebarLinkInfo & {
   adminOnly?: boolean;
 };
 
-const sidebarLinks: SidebarLink[] = [
-  { to: "admin", label: "Dashboard", icon: "pi-home" },
-  { to: "users", label: "Users", icon: "pi-users" },
-  // { to: "/meals", label: "Meals", icon: "pi-apple", adminOnly: true },
-  // { to: "/plans", label: "Plans", icon: "pi-file" },
-  // { to: "/maintenance", label: "Maintenance", icon: "pi-cog" },
-];
-
 export const Sidebar = () => {
-  const { userRole } = useAuth(); // Get user role from auth context
+  const { userRole } = useAuth();
+  const { t } = useLanguage();
   const isAdmin = userRole === "admin";
 
-  // Filter links based on admin status
-  const accessibleLinks = sidebarLinks.filter((link) => {
-    // Show link if:
-    // 1. It's not admin-only, OR
-    // 2. It's admin-only AND user is admin
-    return !link.adminOnly || (link.adminOnly && isAdmin);
-  });
+  const sidebarLinks = useMemo(
+    (): AppSidebarLink[] => [
+      { to: "admin", label: t.sidebar.dashboard, icon: "pi pi-home" },
+      {
+        to: "users",
+        label: t.sidebar.users,
+        icon: "pi pi-users",
+        adminOnly: true,
+      },
+      {
+        to: "orders",
+        label: t.sidebar.orders,
+        icon: "pi pi-shopping-cart",
+        adminOnly: true,
+      },
+      {
+        to: "products",
+        label: t.sidebar.products,
+        icon: "pi pi-tags",
+        adminOnly: true,
+      },
+      {
+        to: "customers",
+        label: t.sidebar.customers,
+        icon: "pi pi-id-card",
+        adminOnly: true,
+      },
+      {
+        to: "content",
+        label: t.sidebar.content,
+        icon: "pi pi-file-edit",
+        adminOnly: true,
+      },
+      {
+        to: "reborts",
+        label: t.sidebar.reports,
+        icon: "pi pi-chart-pie",
+        adminOnly: true,
+      },
+
+      // Add more links here if needed
+    ],
+    [t]
+  );
+
+  const accessibleLinks = useMemo(() => {
+    return sidebarLinks.filter((link) => {
+      return !link.adminOnly || (link.adminOnly && isAdmin);
+    });
+  }, [sidebarLinks, isAdmin]); // Dependencies: sidebarLinks and isAdmin
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
-      <div className="flex items-center justify-center h-16 px-4 flex-shrink-0">
-        <a href="/dashboard" aria-label="Go to dashboard">
-          <img src="/logo.png" alt="Logo" className="h-10 md:h-14" />
-        </a>
+    <aside className="flex h-full w-64 flex-col bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 shadow-lg">
+      <Logo src="/logo.png" alt="Your Company Logo" href="/dashboard" />
+      <hr className="border-t border-gray-200 dark:border-gray-700 mx-4" />
+      <div className="flex flex-1 flex-col overflow-hidden min-h-0">
+        <SidebarNav links={accessibleLinks} />
       </div>
-
-      <nav className="flex-1 px-2 md:px-4 space-y-1 pt-4 overflow-y-auto">
-        {accessibleLinks.map((item) => (
-          <SidebarItem
-            key={item.to} // Changed from 'to' to 'item.to'
-            to={item.to} // Changed from 'to' to 'item.to'
-            label={item.label} // Changed from 'label' to 'item.label'
-            icon={item.icon} // Changed from 'icon' to 'item.icon'
-          />
-        ))}
-      </nav>
-    </div>
+      <div className="mt-auto p-4 border-t border-gray-200 dark:border-gray-700">
+        <p className="text-xs text-center text-gray-500 dark:text-gray-400">
+          App Version 1.0.0
+        </p>
+      </div>
+    </aside>
   );
 };

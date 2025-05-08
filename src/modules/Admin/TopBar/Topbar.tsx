@@ -16,7 +16,7 @@ export const Topbar = ({ isSidebarOpen, onOpenSidebar }: TopbarProps) => {
             {!isSidebarOpen && (
               <button
                 onClick={onOpenSidebar}
-                className="p-2 rounded-md text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
+                className="p-2 rounded-md text-gray-500 hover:text-gray-600 dark:text-orange-400 dark:hover:text-orange-300"
               >
                 <i className="pi pi-bars text-xl" />
               </button>

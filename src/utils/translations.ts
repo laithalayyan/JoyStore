@@ -15,7 +15,7 @@ export const translations = {
     error: "Error",
     signupSuccess: "Registration successful!",
     loginSuccess: "Login successful!",
-    errors : {
+    errors: {
       emailExists: "Email already exists",
       invalidCredentials: "Invalid email or password",
       passwordTooShort: "Password must be at least 8 characters",
@@ -27,6 +27,15 @@ export const translations = {
     accessDenied: "You don't have permission to access this page",
     welcomeAdmin: "Welcome Admin",
     manageUsers: "Manage Users",
+    sidebar: {
+      dashboard: "Dashboard",
+      users: "Users",
+      orders: "Orders",
+      products: "Products",
+      customers: "Customers",
+      content: "Content",
+      reports: "Reports"
+    }
   },
   ar: {
     welcome: 'مرحبا بكم في منصتنا',
@@ -44,7 +53,7 @@ export const translations = {
     error: "خطأ",
     signupSuccess: "تم التسجيل بنجاح!",
     loginSuccess: "تم تسجيل الدخول بنجاح!",
-    errors : {
+    errors: {
       emailExists: "البريد الإلكتروني موجود بالفعل",
       invalidCredentials: "البريد الإلكتروني أو كلمة المرور غير صحيحة",
       passwordTooShort: "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
@@ -56,5 +65,15 @@ export const translations = {
     accessDenied: "ليس لديك إذن للوصول إلى هذه الصفحة",
     welcomeAdmin: "مرحبًا أيها المسؤول",
     manageUsers: "إدارة المستخدمين",
+    sidebar : {
+      dashboard: "لوحة التحكم",
+      users: "المستخدمين",
+      orders: "الطلبات",
+      products: "المنتجات",
+      customers: "العملاء",
+      content: "المحتوى",
+      reports: "التقارير"
+    },
+   
   }
 } as const;

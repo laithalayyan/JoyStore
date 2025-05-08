@@ -51,9 +51,6 @@ function App() {
             <Route index element={<AdminDashboard />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="users" element={<UsersPage />} />
-            {/* <Route path="meals" element={<AdminDashboard />} />
-            <Route path="plans" element={<AdminDashboard />} />
-            <Route path="maintenance" element={<AdminDashboard />} /> */}
           </Route>
         </Route>
         {/* Protected routes */}
