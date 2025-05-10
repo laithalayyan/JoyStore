@@ -1,6 +1,6 @@
 import { AppUserMenu } from "./components/AppUserMenu";
 import { Breadcrumb } from "./components/Breadcrumb";
-import { ThemeToggle } from "./components/ThemeToggle";
+import { ThemeToggle } from "../../shared/components/ThemeToggle2";
 
 interface TopbarProps {
   isSidebarOpen: boolean;

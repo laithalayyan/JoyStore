@@ -17,7 +17,7 @@ export const AdminDashboard = () => {
       </h1>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
         <p className="text-lg dark:text-white">
-          {t.welcomeAdmin} {user}
+          {t.welcomeAdmin} {user?.email || user?.username || "Admin"}
         </p>
         <div className="mt-4">
           {/* Admin-specific content */}

@@ -22,7 +22,7 @@ export function AppUserMenu() {
             {userRole === "admin" ? "Administrator" : "Welcome back"}
           </span>
           <span className="text-sm font-medium text-gray-900 dark:text-white">
-            {user || "Guest"}
+            {typeof user === "string" ? user : user?.email || "Guest"}
           </span>
         </div>
       </div>

@@ -21,7 +21,7 @@ export const SignUpForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessages([]);
-    const { success, error } = await signup(formData);
+    const { success, error } = await signup({ ...formData, role: "user" });
 
     if (success) {
       setMessages([{ severity: "success", content: t.signupSuccess }]);
@@ -51,9 +51,9 @@ export const SignUpForm = () => {
           className="w-full"
         />
       ))}
-      <div className="space-y-1">
+      <div className="space-y-1 text-right">
         <label className="text-sm font-medium text-gray-700 transition-colors duration-300 dark:text-gray-300">
-          {t.name}
+          {"الاسم"}
         </label>
         <InputText
           id="name"
@@ -73,12 +73,12 @@ export const SignUpForm = () => {
         />
       </div>
 
-      <div className="space-y-1">
+      <div className="space-y-1 text-right">
         <label
           htmlFor="email"
           className="text-sm font-medium text-gray-700 transition-colors duration-300 dark:text-gray-300"
         >
-          {t.email}
+          {"البريد الالكتروني"}
         </label>
         <InputText
           id="email"
@@ -95,12 +95,12 @@ export const SignUpForm = () => {
         />
       </div>
 
-      <div className="space-y-1">
+      <div className="space-y-1 text-right">
         <label
           htmlFor="password"
           className="text-sm font-medium text-gray-700 transition-colors duration-300 dark:text-gray-300"
         >
-          {t.password}
+          {"كلمة المرور"}
         </label>
         <InputText
           id="password"
@@ -121,7 +121,7 @@ export const SignUpForm = () => {
       {/* {error && <div className="text-red-500 text-sm">{error}</div>} */}
 
       <Button
-        label={t.signUp}
+        label={"التسجيل"}
         type="submit"
         className="w-full !bg-orange-500 hover:!bg-orange-600 !text-white !font-bold !py-3 !rounded-lg !transition-all !duration-300 !border-none"
         pt={{
@@ -131,12 +131,12 @@ export const SignUpForm = () => {
 
       <div className="mt-4 text-center">
         <span className="text-gray-600 dark:text-gray-300 text-sm">
-          {t.alreadyHaveAccount}{" "}
+          {"هل لديك حساب بالفعل؟"}{" "}
           <Link
             to="/signin"
             className="text-orange-500 hover:text-orange-600 dark:text-orange-400 dark:hover:text-orange-300 font-medium underline underline-offset-4 transition-colors"
           >
-            {t.signIn}
+            {"تسجيل الدخول"}
           </Link>
         </span>
       </div>

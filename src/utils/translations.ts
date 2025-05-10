@@ -8,7 +8,7 @@ export const translations = {
     alreadyHaveAccount: "Already have an account?",
     signIn: "Sign In",
     dontHaveAccount: "Don't have an account?",
-    welcomeBack: "Welcome Back",
+    welcomeBack: "مرحباً بعودتك",
     signupError: "Registration failed. Email already exists.",
     loginError: "Invalid email or password",
     success: "Success",

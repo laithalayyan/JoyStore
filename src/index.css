@@ -6,48 +6,30 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* 
-@theme {
-  --color-primary-DEFAULT: #3B82F6;
-  --color-primary-dark: #2563EB;
+@layer base {
+    html {
+      /* Apply your primary/default font stack for non-Arabic text */
+      /* This will use the 'sans' key from your tailwind.config.js */
+      @apply font-sans;
+    }
+  
+    /* Target elements specifically when the language is Arabic */
+    html[lang="ar"] body,
+    html[lang="ar"] [lang="ar"],
+    body:lang(ar),
+    [lang="ar"] {
+      /* Apply the 'alexandria' font family defined in your Tailwind config */
+      @apply font-alexandria;
+    }
+  
+    /* Optional: If you want headings to specifically use Alexandria too */
+    /* This might be redundant if the body already uses it, but can be explicit */
+    html[lang="ar"] h1,
+    html[lang="ar"] h2,
+    html[lang="ar"] h3,
+    html[lang="ar"] h4,
+    html[lang="ar"] h5,
+    html[lang="ar"] h6 {
+      @apply font-alexandria;
+    }
 }
-
-.dark .p-inputtext {
-  @apply bg-gray-800 border-gray-700 text-gray-100;
-}
-
-.dark .p-inputtext:enabled:hover {
-  @apply border-primary;
-}
-
-.dark .p-inputtext:enabled:focus {
-  @apply ring-primary-400 border-primary-dark shadow-none;
-}
-
-.dark .p-dropdown {
-  @apply bg-gray-800 border-gray-700 text-gray-100;
-}
-
-.dark .p-dropdown-panel {
-  @apply bg-gray-800 border-gray-700;
-}
-
-.dark .p-dropdown-item {
-  @apply text-gray-100 hover:bg-gray-700;
-}
-
-
-* {
-  @apply transition-colors duration-300;
-}
-
-
-[dir="rtl"] .p-dropdown {
-  direction: rtl;
-  text-align: right;
-}
-
-[dir="rtl"] .p-inputtext {
-  text-align: right;
-} */

@@ -14,7 +14,7 @@ export const UsersPage = () => {
       <h1 className="text-3xl font-bold mb-4">{t.adminDashboard}</h1>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
         <p className="text-lg">
-          {t.welcomeAdmin} {user}
+          {t.welcomeAdmin} {user?.email || user?.username || "Guest"}
         </p>
         <div className="mt-4">{/* Admin-specific content */}</div>
       </div>
