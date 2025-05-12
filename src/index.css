@@ -2,7 +2,7 @@
 @import "primereact/resources/primereact.min.css";
 @import "primeicons/primeicons.css";
 
-@import 'swiper/css'; /* If not already imported via JS */
+@import 'swiper/css'; 
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 
