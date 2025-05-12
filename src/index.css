@@ -32,31 +32,22 @@
     }
 }
 
-/* --- Swiper Customization --- */
 .products-swiper-container {
-  /* Ensures a positioning context for absolute positioned nav buttons */
   position: relative;
 }
 
-/* Styling for custom navigation buttons */
-/* We are styling elements with .swiper-button-prev-custom and .swiper-button-next-custom directly with Tailwind in the JSX */
-/* The PrimeIcons pi-angle-left and pi-angle-right should flip correctly in RTL due to global dir="rtl" */
-
-/* Swiper Pagination Dots */
 .products-swiper-container .swiper-pagination-bullet {
   @apply w-2.5 h-2.5 bg-gray-300 dark:bg-gray-600 opacity-70 transition-opacity duration-200;
-  margin: 0 5px !important; /* Override Swiper's default margin if needed */
+  margin: 0 5px !important; 
 }
 
 .products-swiper-container .swiper-pagination-bullet-active {
   @apply bg-orange-500 dark:bg-orange-400 opacity-100;
 }
-
-/* Swiper slides to ensure cards take full height if needed */
 .products-swiper-container .swiper-slide {
-  height: auto; /* Let the ProductCard determine its height */
-  display: flex; /* Optional: if you want cards to stretch vertically */
+  height: auto; 
+  display: flex; 
 }
-.products-swiper-container .swiper-slide > div { /* Assuming ProductCard is wrapped in a div */
+.products-swiper-container .swiper-slide > div { 
   width: 100%;
 }
