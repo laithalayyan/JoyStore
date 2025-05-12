@@ -1,43 +1,49 @@
-// src/modules/User/Main/components/SocialIcons.tsx
 import React from "react";
 
 const socialLinks = [
   {
-    name: "Facebook",
-    icon: "pi pi-facebook",
-    href: "https://facebook.com/yourpage",
-    color: "text-blue-600 hover:text-blue-700",
+    name: "TikTok",
+    icon: "pi pi-tiktok",
+    href: "https://tiktok.com/@yourpage",
   },
   {
     name: "Instagram",
     icon: "pi pi-instagram",
     href: "https://instagram.com/yourpage",
-    color: "text-pink-500 hover:text-pink-600",
   },
   {
-    name: "TikTok",
-    icon: "pi pi-tiktok",
-    href: "https://tiktok.com/@yourpage",
-    color:
-      "text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300",
-  }, // TikTok uses PrimeIcons default color
+    name: "Facebook",
+    icon: "pi pi-facebook",
+    href: "https://facebook.com/yourpage",
+  },
 ];
 
 export const SocialIcons: React.FC = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 px-2">
+    <div className="flex items-center gap-x-3">
       {socialLinks.map((social) => (
         <a
           key={social.name}
           href={social.href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Follow us on ${social.name}`}
-          className={`text-xl md:text-2xl transition-colors duration-150 ${social.color}`}
+          aria-label={`تابعنا على ${social.name}`}
+          className="block group rounded-full focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
-          <div className=" px-1 md:p-2 md:px-3 rounded-full bg-gradient-to-r from-orange-500 via-white-800 to-orange-600 flex items-center justify-center transition-transform duration-200 transform hover:scale-110 hover:rotate-6 hover:translate-y-1">
+          <div
+            className="
+          w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11  /* Responsive sizing for the circle */
+          flex items-center justify-center rounded-full 
+          bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 
+          dark:from-orange-500 dark:via-orange-600 dark:to-red-600 /* Dark mode gradient */
+          shadow-md group-hover:shadow-lg /* Shadow effect */
+          transition-all duration-300 ease-out 
+          transform group-hover:scale-105 group-hover:-translate-y-px /* Subtle hover: scale up, lift slightly */
+          ltr:group-hover:rotate-[2deg] rtl:group-hover:-rotate-[2deg] /* Very subtle rotation, RTL aware */
+        "
+          >
             <i
-              className={`${social.icon} text-white text-sm md:text-sm sm:text-sm`}
+              className={`${social.icon} text-white text-sm sm:text-base md:text-lg`}
             ></i>
           </div>
         </a>

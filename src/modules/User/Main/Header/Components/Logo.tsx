@@ -1,11 +1,10 @@
-// src/modules/User/Main/components/Logo.tsx
 import React from "react";
-import { Link } from "react-router-dom"; // Assuming you'll use React Router
+import { Link } from "react-router-dom";
 
 interface LogoProps {
   src: string;
   alt?: string;
-  href?: string; // If not using React Router Link
+  href?: string; 
   className?: string;
 }
 
@@ -13,7 +12,7 @@ export const Logo: React.FC<LogoProps> = ({
   src,
   alt = "Store Logo",
   href = "/",
-  className = "h-14 md:h-24 w-auto px-2", // Default sizing for user header
+  className = "h-12 md:h-24 w-auto px-2", 
 }) => {
   return (
     <Link to={href} aria-label="اذهب الى الصفحة الرئيسية">

@@ -21,6 +21,7 @@
       /* Apply the 'alexandria' font family defined in your Tailwind config */
       @apply font-alexandria;
     }
+    
   
     /* Optional: If you want headings to specifically use Alexandria too */
     /* This might be redundant if the body already uses it, but can be explicit */
