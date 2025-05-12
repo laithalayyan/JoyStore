@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "./Header/Header";
 import { CategoriesList } from "./SideBarCategories/CategoriesList";
+import { dummyCategoriesWithProducts } from "../../../api/user/productData";
+import { CategorySection } from "./MainPage/Components/CategorySection";
 
 export const MainPage: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -31,7 +33,7 @@ export const MainPage: React.FC = () => {
   }, [isMobileMenuOpen]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       <Header
         onMobileMenuToggle={toggleMobileMenu}
         isMobileMenuOpen={isMobileMenuOpen}
@@ -39,26 +41,31 @@ export const MainPage: React.FC = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col md:flex-row md:space-x-6 rtl:md:space-x-reverse">
-          <aside className="hidden md:block md:w-1/4 order-1 md:order-1 sticky top-28 h-fit">
+          <aside className="hidden md:block md:w-1/4 order-1 md:order-1 sticky top-7 h-fit">
             <CategoriesList />
           </aside>
 
-          <main className="w-full md:w-3/4 order-2 md:order-2">
-            <h1 className="text-2xl font-semibold mb-4 text-right rtl:text-right">
-              مرحباً بك في المتجر!
-            </h1>
-            <p className="text-right rtl:text-right">
-              تصفح منتجاتنا الرائعة...
-            </p>
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div
-                  key={i}
-                  className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md h-40"
-                >
-                  Product {i}
-                </div>
-              ))}
+          {/* Main Content Area */}
+          <main className="w-full lg:w-3/4 order-2 lg:order-2">
+            {/* Optional: Welcome message or banner */}
+            <div className="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+              <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-800 dark:text-gray-100 text-right rtl:text-right">
+                مرحباً بك في متجرنا!
+              </h1>
+              <p className="text-gray-600 dark:text-gray-300 text-right rtl:text-right">
+                اكتشف أحدث المنتجات والعروض الحصرية.
+              </p>
+            </div>
+
+            {/* Render sections for each category with products */}
+            <div className="space-y-12">
+              {dummyCategoriesWithProducts.map(
+                (category) =>
+                  category.products &&
+                  category.products.length > 0 && ( // Only render if category has products
+                    <CategorySection key={category.id} category={category} />
+                  )
+              )}
             </div>
           </main>
         </div>

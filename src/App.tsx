@@ -9,6 +9,7 @@ import { Layout } from "./modules/Admin/Layout";
 import { AdminDashboard } from "./modules/Admin/AdminDashboard";
 import { UsersPage } from "./modules/Admin/Pages/Users/UsersPage";
 import { MainPage } from "./modules/User/Main/mainpage";
+import { CategoryPage } from "./modules/User/Main/CategoryPage/CategoryPage";
 
 function App() {
   const toast = useRef<Toast>(null);
@@ -22,8 +23,11 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
 
         <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<MainPage />} /> {/* Add MainPage here */}
-          {/* Add other user routes like /profile, /orders-history etc. */}
+          <Route path="/" element={<MainPage />} />
+          <Route
+            path="/category/:categorySlug"
+            element={<CategoryPage />}
+          />{" "}
         </Route>
 
         <Route element={<AdminRoute />}>

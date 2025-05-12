@@ -43,7 +43,7 @@ export const CategoriesList: React.FC<CategoriesListProps> = ({
         <ul className="space-y-1 text-right">
           {dummyCategories.map((category) => (
             <li key={category.id}>
-              <Link
+              {/* <Link
                 to={`/category/${category.slug}`}
                 onClick={onCategoryClick}
                 className="flex text-right items-center lg:px-3 md:px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-100 dark:hover:bg-gray-700 hover:text-orange-600 dark:hover:text-orange-400 rounded-md transition-colors duration-150"
@@ -54,6 +54,26 @@ export const CategoriesList: React.FC<CategoriesListProps> = ({
                   ></i>
                 )}
                 <span>{category.name}</span>
+              </Link> */}
+              <Link
+                to={`/category/${category.slug}`} // Link to category page
+                onClick={onCategoryClick}
+                // Added flex-row-reverse for RTL to put icon on the right
+                className="flex items-center rtl:flex-row-reverse justify-between px-3 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-100 dark:hover:bg-gray-700 hover:text-orange-600 dark:hover:text-orange-400 rounded-md transition-colors duration-150"
+              >
+                <i className="pi pi-angle-left text-xs text-gray-400 dark:text-gray-500"></i>
+
+                <div className="flex items-center">
+                  {" "}
+                  {/* Group icon and name */}
+                  {category.icon && (
+                    <i
+                      className={`${category.icon} text-lg opacity-75 rtl:ml-3`}
+                    ></i>
+                  )}
+                  <span>{category.name}</span>
+                </div>
+                {/* Optional: Add a chevron or indicator */}
               </Link>
             </li>
           ))}
