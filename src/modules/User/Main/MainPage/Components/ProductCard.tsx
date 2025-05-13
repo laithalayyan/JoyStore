@@ -1,4 +1,3 @@
-// src/modules/User/Main/components/ProductCard.tsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
@@ -23,7 +22,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     console.log("Toggle favorite:", product.name, product.id);
   };
 
-  // Base icon class (filled or not)
   const favoriteIconBase = isFavorite
     ? "pi pi-heart-fill text-sm lg:text-lg"
     : "pi pi-heart text-sm lg:text-lg";
@@ -32,7 +30,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl group border border-transparent hover:border-orange-300 dark:hover:border-orange-600 flex flex-col h-full">
       <div className="relative">
         <Link to={`/product/${product.id}`} className="block group/link">
-          <div className="aspect-w-9 aspect-h-12 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+          <div className="aspect-w-11 aspect-h-12 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
             <img
               src={product.imageUrl}
               alt={product.name}
@@ -41,10 +39,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </div>
         </Link>
         <Button
-          icon={favoriteIconBase} // Pass only the base icon class, size will be handled by CSS
+          icon={favoriteIconBase}
           onClick={handleToggleFavorite}
-          // ADD A CUSTOM CLASS HERE, e.g., 'product-card-favorite-btn'
-          // Also keep existing styling classes
           className={`!absolute top-2 right-2 rtl:right-auto rtl:left-2 
             !rounded-full !shadow-md 
             !w-8 !h-8 lg:!w-12 lg:!h-12  /* Fixed width and height */
@@ -55,14 +51,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 ? "!bg-red-500/80 hover:!bg-red-600/90 !text-white"
                 : "!bg-white/70 hover:!bg-white/90 dark:!bg-gray-700/70 dark:hover:!bg-gray-600/90 !text-gray-600 dark:!text-gray-300 hover:!text-red-500 dark:hover:!text-red-400"
             }`}
-          //tooltip={isFavorite ? "إزالة من المفضلة" : "أضف للمفضلة"}
-          //tooltipOptions={{ position: "top", showDelay: 300 }}
           aria-pressed={isFavorite}
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         />
       </div>
 
-      {/* Content below image (keep as is from previous correct version) */}
       <div className="p-3 sm:p-4 flex-grow flex flex-col">
         <Link
           to={`/product/${product.id}`}
