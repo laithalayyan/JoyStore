@@ -55,8 +55,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 ? "!bg-red-500/80 hover:!bg-red-600/90 !text-white"
                 : "!bg-white/70 hover:!bg-white/90 dark:!bg-gray-700/70 dark:hover:!bg-gray-600/90 !text-gray-600 dark:!text-gray-300 hover:!text-red-500 dark:hover:!text-red-400"
             }`}
-          tooltip={isFavorite ? "إزالة من المفضلة" : "أضف للمفضلة"}
-          tooltipOptions={{ position: "top", showDelay: 300 }}
+          //tooltip={isFavorite ? "إزالة من المفضلة" : "أضف للمفضلة"}
+          //tooltipOptions={{ position: "top", showDelay: 300 }}
           aria-pressed={isFavorite}
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         />
