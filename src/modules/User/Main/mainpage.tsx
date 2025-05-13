@@ -3,6 +3,8 @@ import { Header } from "./Header/Header";
 import { CategoriesList } from "./SideBarCategories/CategoriesList";
 import { dummyCategoriesWithProducts } from "../../../api/user/productData";
 import { CategorySection } from "./MainPage/Components/CategorySection";
+import WelcomeBanner from "./MainPage/Components/WelcomeBanner";
+import MobileMenu from "./SideBarCategories/MobileMenu";
 
 export const MainPage: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -48,14 +50,7 @@ export const MainPage: React.FC = () => {
           {/* Main Content Area */}
           <main className="w-full lg:w-3/4 order-2 lg:order-2">
             {/* Optional: Welcome message or banner */}
-            <div className="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-              <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-gray-800 dark:text-gray-100 text-right rtl:text-right">
-                مرحباً بك في متجرنا!
-              </h1>
-              <p className="text-gray-600 dark:text-gray-300 text-right rtl:text-right">
-                اكتشف أحدث المنتجات والعروض الحصرية.
-              </p>
-            </div>
+            <WelcomeBanner />
 
             {/* Render sections for each category with products */}
             <div className="space-y-12">
@@ -72,40 +67,10 @@ export const MainPage: React.FC = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <>
-          <div
-            className="fixed inset-0 bg-black bg-opacity-60 z-[55] md:hidden transition-opacity duration-300 ease-in-out"
-            onClick={toggleMobileMenu}
-            aria-hidden="true"
-          ></div>
-          <div
-            className={`fixed top-0 h-full w-3/4 max-w-xs sm:max-w-sm bg-white dark:bg-gray-800 shadow-xl z-[60] transform transition-transform duration-300 ease-in-out md:hidden
-                        rtl:right-0 ltr:left-0 
-                        ${
-                          isMobileMenuOpen
-                            ? "translate-x-0"
-                            : "rtl:translate-x-full ltr:-translate-x-full"
-                        }`}
-          >
-            <div className="p-4 flex flex-col h-full">
-              <div className="flex justify-between items-center mb-4 pb-2 border-b dark:border-gray-700 flex-shrink-0">
-                <h2 className="text-xl font-semibold dark:text-white">
-                  الفئات
-                </h2>
-                <button
-                  onClick={toggleMobileMenu}
-                  className="p-1 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none"
-                  aria-label="إغلاق القائمة"
-                >
-                  <i className="pi pi-times text-xl"></i>
-                </button>
-              </div>
-              <div className="flex-grow overflow-y-auto">
-                <CategoriesList onCategoryClick={toggleMobileMenu} />
-              </div>
-            </div>
-          </div>
-        </>
+        <MobileMenu
+          isMobileMenuOpen={true}
+          toggleMobileMenu={toggleMobileMenu}
+        />
       )}
     </div>
   );

@@ -1,4 +1,3 @@
-// src/modules/User/Main/components/CategorySection.tsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { ProductsSlider } from "./ProductsSlider";
@@ -21,9 +20,8 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
           to={`/category/${category.slug}`}
           className="text-sm font-medium text-orange-600 hover:text-orange-500 dark:text-orange-400 dark:hover:text-orange-300 flex items-center"
         >
-          <span>{"عرض الكل"}</span> {/* Example using t or fallback */}
+          <span>{"عرض الكل"}</span>
           <i className="pi pi-angle-left rtl:pi-angle-right ml-1 rtl:mr-1 rtl:ml-0 text-xs"></i>{" "}
-          {/* Arrow flips for RTL */}
         </Link>
       </div>
       <ProductsSlider products={category.products} />
