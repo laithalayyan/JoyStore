@@ -12,6 +12,7 @@ import { CategoryPageHeader } from "./Components/CategoryPageHeader";
 import { FilterSortControls } from "./Components/FilterSortControls";
 import { PaginationControls } from "./Components/PaginationControls";
 import { ProductGrid } from "./Components/ProductGrid";
+import MobileMenu from "../SideBarCategories/MobileMenu";
 
 const SORT_OPTIONS = [
   { label: "الأحدث", value: "newest" },
@@ -88,7 +89,9 @@ export const CategoryPage: React.FC = () => {
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   if (loading) {
     /* ... loading UI ... */
@@ -131,6 +134,13 @@ export const CategoryPage: React.FC = () => {
           onPageChange={onPageChange}
         />
       </div>
+
+      {isMobileMenuOpen && (
+        <MobileMenu
+          isMobileMenuOpen={true}
+          toggleMobileMenu={toggleMobileMenu}
+        />
+      )}
     </div>
   );
 };
