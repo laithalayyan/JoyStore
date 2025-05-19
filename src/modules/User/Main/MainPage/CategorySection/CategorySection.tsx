@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ProductsSlider } from "./ProductsSlider";
+import { ProductsSlider } from "./Components/ProductsSlider";
 import { CategoryWithProducts } from "../../../../../api/user/productData";
 
 interface CategorySectionProps {

@@ -3,7 +3,7 @@ import { ProductCard } from "./ProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { Navigation, Pagination, A11y } from "swiper/modules";
-import { Product } from "../../../../../api/user/productData";
+import { Product } from "../../../../../../api/user/productData";
 
 interface ProductsSliderProps {
   products: Product[];
@@ -46,7 +46,7 @@ export const ProductsSlider: React.FC<ProductsSliderProps> = ({ products }) => {
         loop={products.length > 5}
         breakpoints={{
           390: {
-            slidesPerView: 3.5,
+            slidesPerView: 2.5,
             spaceBetween: 16,
           },
           576: {

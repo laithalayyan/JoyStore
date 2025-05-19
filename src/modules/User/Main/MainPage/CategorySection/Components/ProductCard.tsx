@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
-import { Product } from "../../../../../api/user/productData";
+import { Product } from "../../../../../../api/user/productData";
 
 interface ProductCardProps {
   product: Product;

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Header } from "./Header/Header";
 import { CategoriesList } from "./SideBarCategories/CategoriesList";
 import { dummyCategoriesWithProducts } from "../../../api/user/productData";
-import { CategorySection } from "./MainPage/Components/CategorySection";
-import WelcomeBanner from "./MainPage/Components/WelcomeBanner";
+import { CategorySection } from "./MainPage/CategorySection/CategorySection";
+import WelcomeBanner from "./MainPage/WelcomeBanner/WelcomeBanner";
 import MobileMenu from "./SideBarCategories/MobileMenu";
 
 export const MainPage: React.FC = () => {

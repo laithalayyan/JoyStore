@@ -10,6 +10,7 @@ import { AdminDashboard } from "./modules/Admin/AdminDashboard";
 import { UsersPage } from "./modules/Admin/Pages/Users/UsersPage";
 import { MainPage } from "./modules/User/Main/mainpage";
 import { CategoryPage } from "./modules/User/Main/CategoryPage/CategoryPage";
+import { ProductDetailPage } from "./modules/User/Main/ProductPage/ProductDetailPage";
 
 function App() {
   const toast = useRef<Toast>(null);
@@ -24,10 +25,8 @@ function App() {
 
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<MainPage />} />
-          <Route
-            path="/category/:categorySlug"
-            element={<CategoryPage />}
-          />{" "}
+          <Route path="/category/:categorySlug" element={<CategoryPage />} />
+          <Route path="/product/:productId" element={<ProductDetailPage />} />
         </Route>
 
         <Route element={<AdminRoute />}>
