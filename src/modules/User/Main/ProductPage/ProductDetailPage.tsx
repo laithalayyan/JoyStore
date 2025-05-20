@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getProductById, Product } from "../../../../api/user/productData";
 import { Header } from "../Header/Header";
-import { ProductActions } from "./Components/ProductActions";
+import { ProductActions } from "./Components/ProductActions/ProductActions";
 import { ProductDescription } from "./Components/ProductDescription";
-import { ProductImages } from "./Components/ProductImages";
-import { ProductInfo } from "./Components/ProductInfo";
+import { ProductImages } from "./Components/ProductImages/ProductImages";
+import { ProductInfo } from "./Components/ProductInfo/ProductInfo";
+import MobileMenu from "../SideBarCategories/MobileMenu";
+import { ProductPath } from "./Components/ProductPath";
+import { ProductShippingInfoTable } from "./Components/ShippingTable/ProductShippingInfoTable";
+import { RelatedProducts } from "./Components/RelatedProducts";
 
 export const ProductDetailPage: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -84,52 +88,41 @@ export const ProductDetailPage: React.FC = () => {
         isMobileMenuOpen={isMobileMenuOpen}
       />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <nav className="text-sm mb-4" aria-label="Breadcrumb">
-          <ol className="list-none p-0 inline-flex items-center space-x-2 rtl:space-x-reverse text-gray-500 dark:text-gray-400">
-            <li>
-              <Link to="/" className="hover:text-orange-600">
-                الرئيسية
-              </Link>
-            </li>
-            <li>
-              <i className="pi pi-angle-left rtl:pi-angle-left text-xs"></i>
-            </li>
-            {product.categoryName && (
-              <>
-                <li>
-                  <Link
-                    to={`/category/${product.categoryId}`}
-                    className="hover:text-orange-600"
-                  >
-                    {product.categoryName}
-                  </Link>
-                </li>
-                <li>
-                  <i className="pi pi-angle-left rtl:pi-angle-left text-xs"></i>
-                </li>
-              </>
-            )}
-            <li className="text-gray-700 dark:text-gray-200 font-medium">
-              {product.name}
-            </li>
-          </ol>
-        </nav>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          <div>
-            <ProductInfo product={product} />
-            <ProductActions product={product} />
-          </div>
-          <div className="md:sticky md:top-28 md:h-[calc(100vh-8rem)] md:overflow-y-hidden md:pr-4 rtl:md:pl-4 rtl:md:pr-0">
+        <ProductPath
+          productName={product.name}
+          categoryId={product.categoryId}
+          categoryName={product.categoryName}
+        />
+        <div className="flex flex-col md:flex-row md:gap-8 lg:gap-12">
+          <div className="w-full md:w-5/12 lg:w-6/12 xl:w-5/12 order-1 md:order-2 md:sticky md:top-28 md:h-[calc(100vh-8rem)] md:overflow-y-hidden">
             <ProductImages
-              mainImageUrl={product.imageUrl}
-              additionalImages={product.images}
-              productName={product.name}
+              mainImageUrl={product!.imageUrl}
+              additionalImages={product!.images}
+              productName={product!.name}
               maxVisibleThumbnails={3.5}
             />
           </div>
+          <div className="w-full md:w-7/12 lg:w-6/12 xl:w-7/12 order-2 md:order-1 mt-6 md:mt-0">
+            <ProductInfo product={product!} />
+            <ProductActions product={product!} />
+            <ProductShippingInfoTable />
+          </div>
         </div>
         <ProductDescription description={product.description} />
+
+        {/* Related Products Section */}
+        <RelatedProducts
+          categoryId={product.categoryId}
+          currentProductId={product.id}
+          className="mt-12 md:mt-16" // Add some top margin
+        />
       </div>
+      {isMobileMenuOpen && (
+        <MobileMenu
+          isMobileMenuOpen={true}
+          toggleMobileMenu={toggleMobileMenu}
+        />
+      )}
     </div>
   );
 };
