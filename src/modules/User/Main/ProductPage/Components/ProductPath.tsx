@@ -43,7 +43,7 @@ export const ProductPath: React.FC<ProductPathProps> = ({
         <li className="text-gray-700 dark:text-gray-200 font-medium">
           <span className="block md:hidden">
             {productName.length > 20
-              ? `${productName.substring(0, 20)}...`
+              ? `${productName.substring(0, 15)}...`
               : productName}
           </span>
           <span className="hidden md:block">{productName}</span>
