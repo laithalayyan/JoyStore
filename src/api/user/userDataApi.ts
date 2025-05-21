@@ -1,27 +1,16 @@
-// src/api/user/userDataApi.ts
-
-// --- Types ---
-export interface ProductSummary {
-    id: string | number;
-    name: string;
-    price: number;       // ADDED
-  imageUrl: string;    // ADDED
-  slug?: string; 
-  categoryId: string | number; // Category ID for the product
-    // Add other relevant product summary fields like image, price if needed
-  }
+import { Product } from "./productData";
   
   export interface FavoriteItem {
     id: string | number; // Unique ID for the favorite entry itself
     userId: string; // User's email
-    product: ProductSummary;
+    product: Product;
     addedAt: Date;
   }
   
   export interface CartItem {
     id: string | number; // Unique ID for the cart item entry
     userId: string; // User's email
-    product: ProductSummary;
+    product: Product;
     quantity: number;
     addedAt: Date;
   }
@@ -29,55 +18,44 @@ export interface ProductSummary {
   // --- In-memory Mock Database ---
   let mockUserFavoritesDb: FavoriteItem[] = [];
   let mockUserCartDb: CartItem[] = [];
-  let nextFavoriteId = 1;
+  //let nextFavoriteId = 1;
   let nextCartItemId = 1;
   
   // Example initial data (optional)
   if (import.meta.env.MODE === 'development') {
     const user1Email = "user@example.com";
-    // Example: If you have full product data elsewhere, reference it.
-    // Otherwise, add dummy price/imageUrl here.
-    const product1Summary: ProductSummary = {
-      id: 'p101',
-      name: 'سماعات لاسلكية حديثة',
-      price: 129.99,
-      imageUrl: 'https://picsum.photos/seed/p101/300/200',
-      categoryId: 1, // Assign a category ID
-      slug: 'headphones-xyz'
+
+    // You'd need to have some full Product objects available for seeding
+    // For this example, I'll create very minimal Product objects.
+    // In a real setup, these would be complete.
+    const product1ForFav: Product = {
+        id: 'p101', name: 'سماعات لاسلكية حديثة', price: 129.99, imageUrl: 'https://picsum.photos/seed/p101/300/200', categoryId: 1, description: 'وصف كامل هنا',
+        // Add ALL other required fields for Product type here with dummy values
+        images: [{id: 'p101_main', url: 'https://picsum.photos/seed/p101/300/200', altText: 'سماعات لاسلكية حديثة'}],
+        stock: 10,
+        // etc.
     };
-    const product2Summary: ProductSummary = {
-      id: 'p201',
-      name: 'قميص قطني كاجوال',
-      price: 25.99,
-      imageUrl: 'https://picsum.photos/seed/p201/300/200',
-      categoryId: 2, // Assign a category ID
-      slug: 'cotton-shirt-abc'
-    };
-    const product3Summary: ProductSummary = {
-      id: 'p103',
-      name: 'لوحة مفاتيح ميكانيكية',
-      price: 89.00,
-      imageUrl: 'https://picsum.photos/seed/p103/300/200',
-      categoryId: 1, // Assign a category ID
-      slug: 'keyboard-rgb'
+    const product3ForFav: Product = {
+        id: 'p103', name: 'لوحة مفاتيح ميكانيكية', price: 89.00, imageUrl: 'https://picsum.photos/seed/p103/300/200', categoryId: 1, description: 'وصف كامل هنا',
+        images: [{id: 'p103_main', url: 'https://picsum.photos/seed/p103/300/200', altText: 'لوحة مفاتيح'}],
+        stock: 5,
+        // etc.
     };
 
-    // Update seeding for favorites
-    if (!mockUserFavoritesDb.some(f => f.userId === user1Email && f.product.id === product1Summary.id)) {
+    if (!mockUserFavoritesDb.some(f => f.userId === user1Email && f.product.id === product1ForFav.id)) {
         mockUserFavoritesDb.push({
-            id: nextFavoriteId++, userId: user1Email, product: product1Summary, addedAt: new Date()
+            id: product1ForFav.id, // Use product ID as favorite ID for simplicity here
+            userId: user1Email,
+            product: product1ForFav, // Store the full product
+            addedAt: new Date()
         });
     }
-    if (!mockUserFavoritesDb.some(f => f.userId === user1Email && f.product.id === product3Summary.id)) {
-         mockUserFavoritesDb.push({
-            id: nextFavoriteId++, userId: user1Email, product: product3Summary, addedAt: new Date()
-        });
-    }
-
-    // Update seeding for cart
-    if (!mockUserCartDb.some(c => c.userId === user1Email && c.product.id === product2Summary.id)) {
-        mockUserCartDb.push({
-            id: nextCartItemId++, userId: user1Email, product: product2Summary, quantity: 1, addedAt: new Date()
+    if (!mockUserFavoritesDb.some(f => f.userId === user1Email && f.product.id === product3ForFav.id)) {
+        mockUserFavoritesDb.push({
+            id: product3ForFav.id,
+            userId: user1Email,
+            product: product3ForFav,
+            addedAt: new Date()
         });
     }
 }
@@ -90,26 +68,28 @@ export interface ProductSummary {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(mockUserFavoritesDb.filter(fav => fav.userId === userId));
-        }, 300);
+        }, 100);
       });
     },
   
-    async addFavorite(userId: string, productData: ProductSummary): Promise<{ success: boolean, item?: FavoriteItem, error?: string }> {
+    // addFavorite now expects a full Product object
+    async addFavorite(userId: string, productToAdd: Product): Promise<{ success: boolean, item?: FavoriteItem, error?: string }> {
       return new Promise((resolve) => {
         setTimeout(() => {
-          if (mockUserFavoritesDb.some(fav => fav.userId === userId && fav.product.id === productData.id)) {
+          if (mockUserFavoritesDb.some(fav => fav.userId === userId && fav.product.id === productToAdd.id)) {
             resolve({ success: false, error: 'already-favorited' });
             return;
           }
           const newFavorite: FavoriteItem = {
-            id: `fav-${nextFavoriteId++}`,
+            id: productToAdd.id, // Use product ID as favorite ID
             userId,
-            product: productData, // Store the ProductSummary
+            product: productToAdd, // Store the full product object
             addedAt: new Date(),
           };
           mockUserFavoritesDb.push(newFavorite);
+          console.log('Added to favorites DB:', newFavorite);
           resolve({ success: true, item: newFavorite });
-        }, 300);
+        }, 100);
       });
     },
   
@@ -118,10 +98,11 @@ export interface ProductSummary {
         setTimeout(() => {
           const initialLength = mockUserFavoritesDb.length;
           mockUserFavoritesDb = mockUserFavoritesDb.filter(
-            fav => !(fav.userId === userId && fav.product.id === productId)
+            fav => !(fav.userId === userId && fav.product.id.toString() === productId.toString())
           );
+          console.log('Removed from favorites DB, new length:', mockUserFavoritesDb.length);
           resolve({ success: mockUserFavoritesDb.length < initialLength });
-        }, 300);
+        }, 100);
       });
     },
   
@@ -134,7 +115,7 @@ export interface ProductSummary {
       });
     },
   
-    async addToCart(userId: string, product: ProductSummary, quantity: number = 1): Promise<{ success: boolean, item?: CartItem, error?: string }> {
+    async addToCart(userId: string, product: Product, quantity: number = 1): Promise<{ success: boolean, item?: CartItem, error?: string }> {
       return new Promise((resolve) => {
         setTimeout(() => {
           const existingItemIndex = mockUserCartDb.findIndex(

@@ -2,27 +2,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Product } from "../../../../../../api/user/productData";
+import { useDispatch, useSelector } from "react-redux";
+import { removeProductFromFavorites, addProductToFavorites } from "../../../../../../store/slices/favoriteSlice";
+import { AppDispatch, RootState } from "../../../../../../store/store";
 
 interface ProductCardProps {
   product: Product;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [isFavorite, setIsFavorite] = React.useState(false);
+export const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+}) => {
+  // const [isFavorite, setIsFavorite] = React.useState(false);
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const dispatch = useDispatch<AppDispatch>();
+  // Get all favorite items from Redux store to check if this product is a favorite
+  const favoriteItems = useSelector((state: RootState) => state.favorites.items);
+  const isCurrentlyFavorite = favoriteItems.some(favProduct => favProduct.id === product.id);
+  const handleActualAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation(); // Prevent link navigation
     console.log("Add to cart:", product.name, product.id);
+    // onAddToCart?.(product.id); // Call actual add to cart logic
   };
 
-  const handleToggleFavorite = (e: React.MouseEvent) => {
+  const handleActualToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsFavorite(!isFavorite);
-    console.log("Toggle favorite:", product.name, product.id);
+    if (isCurrentlyFavorite) {
+      dispatch(removeProductFromFavorites(product.id));
+    } else {
+      dispatch(addProductToFavorites(product)); // Pass the full product object
+    }
   };
 
-  const favoriteIconBase = isFavorite
+  const favoriteIconBase = isCurrentlyFavorite
     ? "pi pi-heart-fill text-sm lg:text-lg"
     : "pi pi-heart text-sm lg:text-lg";
 
@@ -40,19 +54,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </Link>
         <Button
           icon={favoriteIconBase}
-          onClick={handleToggleFavorite}
+          onClick={handleActualToggleFavorite}
           className={`!absolute top-2 right-2 rtl:right-auto rtl:left-2 
             !rounded-full !shadow-md 
             !w-8 !h-8 lg:!w-12 lg:!h-12  /* Fixed width and height */
             flex items-center justify-center /* Center the icon */
             transition-colors duration-200 product-card-favorite-btn 
             ${
-              isFavorite
+              isCurrentlyFavorite
                 ? "!bg-red-500/80 hover:!bg-red-600/90 !text-white"
                 : "!bg-white/70 hover:!bg-white/90 dark:!bg-gray-700/70 dark:hover:!bg-gray-600/90 !text-gray-600 dark:!text-gray-300 hover:!text-red-500 dark:hover:!text-red-400"
             }`}
-          aria-pressed={isFavorite}
-          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          aria-pressed={isCurrentlyFavorite}
+          aria-label={isCurrentlyFavorite ? "إزالة من المفضلة" : "أضف للمفضلة"}
+          tooltip={isCurrentlyFavorite ? "إزالة من المفضلة" : "أضف للمفضلة"}
+          tooltipOptions={{ position: "top", showDelay: 300 }}
         />
       </div>
 
@@ -84,7 +100,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <Button
             icon="pi pi-cart-plus"
             className="p-button-sm py-2 !bg-orange-500 !border-orange-500 hover:!bg-orange-600 dark:hover:!bg-orange-700 !text-white w-full justify-center text-xs xxs:text-sm xs:text-base sm:text-xs md:text-sm"
-            onClick={handleAddToCart}
+            onClick={handleActualAddToCart}
           >
             <span className="hidden md:inline ml-2 rtl:mr-2 rtl:ml-0">
               أضف للسلة
