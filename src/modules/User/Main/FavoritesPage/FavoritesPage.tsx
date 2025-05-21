@@ -45,9 +45,22 @@ export const FavoritesPage: React.FC = () => {
     );
   }
 
-  if (favoritesStatus === "failed") {
-    return <div></div>;
-  }
+if (favoritesStatus === "failed") {
+    return (
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+            <Header
+                onMobileMenuToggle={toggleMobileMenu}
+                isMobileMenuOpen={isMobileMenuOpen}
+            />
+            <div className="container mx-auto p-6 text-center">
+                <i className="pi pi-times-circle text-3xl text-red-500 dark:text-red-400"></i>
+                <p className="mt-3 text-lg text-gray-700 dark:text-gray-300">
+                    حدث خطأ أثناء تحميل المفضلة. يرجى المحاولة مرة أخرى لاحقًا.
+                </p>
+            </div>
+        </div>
+    );
+}
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
