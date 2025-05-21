@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { IconWithBadge } from "./IconWithBadge";
 import { useAuth } from "../../../../shared/hooks/AuthContext";
 import { Button } from "primereact/button";
@@ -41,11 +41,13 @@ export const ActionIcons: React.FC = () => {
   }, [user]);
 
   const handleFavoritesClick = () => {
-    console.log("Favorites clicked");
+    console.log("Favorites clicked - navigating");
+    navigate("/favorites"); // Navigate to the favorites page
   };
 
   const handleCartClick = () => {
-    console.log("Cart clicked");
+    console.log("Cart clicked - navigating");
+    navigate("/cart"); // Navigate to the cart page (we'll build this next)
   };
 
   const handleLogout = () => {

@@ -11,11 +11,14 @@ import { UsersPage } from "./modules/Admin/Pages/Users/UsersPage";
 import { MainPage } from "./modules/User/Main/mainpage";
 import { CategoryPage } from "./modules/User/Main/CategoryPage/CategoryPage";
 import { ProductDetailPage } from "./modules/User/Main/ProductPage/ProductDetailPage";
+import { FavoritesPage } from "./modules/User/Main/FavoritesPage/FavoritesPage";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 function App() {
   const toast = useRef<Toast>(null);
   return (
     <>
+      <ConfirmDialog />
       <Toast ref={toast} position="top-right" />
 
       <Routes>
@@ -27,6 +30,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/category/:categorySlug" element={<CategoryPage />} />
           <Route path="/product/:productId" element={<ProductDetailPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
         </Route>
 
         <Route element={<AdminRoute />}>

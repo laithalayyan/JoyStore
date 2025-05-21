@@ -4,6 +4,10 @@
 export interface ProductSummary {
     id: string | number;
     name: string;
+    price: number;       // ADDED
+  imageUrl: string;    // ADDED
+  slug?: string; 
+  categoryId: string | number; // Category ID for the product
     // Add other relevant product summary fields like image, price if needed
   }
   
@@ -30,47 +34,53 @@ export interface ProductSummary {
   
   // Example initial data (optional)
   if (import.meta.env.MODE === 'development') {
-      const user1Email = "user@example.com";
-      const product1: ProductSummary = { id: 'prod101', name: 'Modern Sofa' };
-      const product2: ProductSummary = { id: 'prod102', name: 'Coffee Table Oak' };
-      const product3: ProductSummary = { id: 'prod103', name: 'LED Desk Lamp' };
-  
-      if (!mockUserFavoritesDb.some(f => f.userId === user1Email && f.product.id === product1.id)) {
-          mockUserFavoritesDb.push({
-              id: nextFavoriteId++,
-              userId: user1Email,
-              product: product1,
-              addedAt: new Date()
-          });
-      }
-       if (!mockUserFavoritesDb.some(f => f.userId === user1Email && f.product.id === product3.id)) {
-          mockUserFavoritesDb.push({
-              id: nextFavoriteId++,
-              userId: user1Email,
-              product: product3,
-              addedAt: new Date()
-          });
-      }
-  
-      if (!mockUserCartDb.some(c => c.userId === user1Email && c.product.id === product2.id)) {
-          mockUserCartDb.push({
-              id: nextCartItemId++,
-              userId: user1Email,
-              product: product2,
-              quantity: 1,
-              addedAt: new Date()
-          });
-      }
-      if (!mockUserCartDb.some(c => c.userId === user1Email && c.product.id === product1.id)) {
-          mockUserCartDb.push({
-              id: nextCartItemId++,
-              userId: user1Email,
-              product: product1,
-              quantity: 2,
-              addedAt: new Date()
-          });
-      }
-  }
+    const user1Email = "user@example.com";
+    // Example: If you have full product data elsewhere, reference it.
+    // Otherwise, add dummy price/imageUrl here.
+    const product1Summary: ProductSummary = {
+      id: 'p101',
+      name: 'سماعات لاسلكية حديثة',
+      price: 129.99,
+      imageUrl: 'https://picsum.photos/seed/p101/300/200',
+      categoryId: 1, // Assign a category ID
+      slug: 'headphones-xyz'
+    };
+    const product2Summary: ProductSummary = {
+      id: 'p201',
+      name: 'قميص قطني كاجوال',
+      price: 25.99,
+      imageUrl: 'https://picsum.photos/seed/p201/300/200',
+      categoryId: 2, // Assign a category ID
+      slug: 'cotton-shirt-abc'
+    };
+    const product3Summary: ProductSummary = {
+      id: 'p103',
+      name: 'لوحة مفاتيح ميكانيكية',
+      price: 89.00,
+      imageUrl: 'https://picsum.photos/seed/p103/300/200',
+      categoryId: 1, // Assign a category ID
+      slug: 'keyboard-rgb'
+    };
+
+    // Update seeding for favorites
+    if (!mockUserFavoritesDb.some(f => f.userId === user1Email && f.product.id === product1Summary.id)) {
+        mockUserFavoritesDb.push({
+            id: nextFavoriteId++, userId: user1Email, product: product1Summary, addedAt: new Date()
+        });
+    }
+    if (!mockUserFavoritesDb.some(f => f.userId === user1Email && f.product.id === product3Summary.id)) {
+         mockUserFavoritesDb.push({
+            id: nextFavoriteId++, userId: user1Email, product: product3Summary, addedAt: new Date()
+        });
+    }
+
+    // Update seeding for cart
+    if (!mockUserCartDb.some(c => c.userId === user1Email && c.product.id === product2Summary.id)) {
+        mockUserCartDb.push({
+            id: nextCartItemId++, userId: user1Email, product: product2Summary, quantity: 1, addedAt: new Date()
+        });
+    }
+}
   
   
   // --- API Functions ---
@@ -84,17 +94,17 @@ export interface ProductSummary {
       });
     },
   
-    async addFavorite(userId: string, product: ProductSummary): Promise<{ success: boolean, item?: FavoriteItem, error?: string }> {
+    async addFavorite(userId: string, productData: ProductSummary): Promise<{ success: boolean, item?: FavoriteItem, error?: string }> {
       return new Promise((resolve) => {
         setTimeout(() => {
-          if (mockUserFavoritesDb.some(fav => fav.userId === userId && fav.product.id === product.id)) {
+          if (mockUserFavoritesDb.some(fav => fav.userId === userId && fav.product.id === productData.id)) {
             resolve({ success: false, error: 'already-favorited' });
             return;
           }
           const newFavorite: FavoriteItem = {
             id: `fav-${nextFavoriteId++}`,
             userId,
-            product,
+            product: productData, // Store the ProductSummary
             addedAt: new Date(),
           };
           mockUserFavoritesDb.push(newFavorite);
