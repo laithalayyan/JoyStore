@@ -1,4 +1,3 @@
-import { LanguageDropdown } from "../../shared/components/LanguageDropdown";
 import { ThemeToggle } from "../../shared/components/ThemeToggle";
 import { useLanguage } from "../../shared/hooks/LanguageContext";
 import { useTheme } from "../../shared/hooks/ThemeContext";
@@ -7,7 +6,7 @@ import { Cologo } from "../shared/components/logo";
 import { SignUpForm } from "./components/SignUpForm";
 
 export const SignUpPage = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const { darkMode } = useTheme();
 
   return (
@@ -30,7 +29,7 @@ export const SignUpPage = () => {
             <div className="flex items-center justify-between">
               {Cologo()}
               <div className="flex gap-3">
-                <LanguageDropdown />
+                {/* <LanguageDropdown /> */}
                 <ThemeToggle />
               </div>
             </div>
@@ -39,10 +38,10 @@ export const SignUpPage = () => {
             <div className="space-y-6">
               <h1
                 className={`text-3xl font-bold text-gray-800 dark:text-gray-100 ${
-                  language === "ar" ? "text-right" : "text-left"
+                  language === "ar" ? "text-right" : "text-right"
                 }`}
               >
-                {t.welcome}
+                {"مرحبا بكم في متجرنا"}
               </h1>
 
               <div className="bg-gray-50 dark:bg-gray-700 p-8 rounded-xl shadow-inner border border-gray-100 dark:border-gray-600">

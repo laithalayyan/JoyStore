@@ -1,4 +1,3 @@
-import { LanguageDropdown } from "../../shared/components/LanguageDropdown";
 import { ThemeToggle } from "../../shared/components/ThemeToggle";
 import { useLanguage } from "../../shared/hooks/LanguageContext";
 import { useTheme } from "../../shared/hooks/ThemeContext";
@@ -30,15 +29,15 @@ export const SignInPage = () => {
             <div className="flex items-center justify-between">
               <Cologo />
               <div className="flex gap-3">
-                <LanguageDropdown />
+                {/* <LanguageDropdown /> */}
                 <ThemeToggle />
               </div>
             </div>
 
             {/* Content - Matched spacing */}
-            <div className="space-y-6">
+            <div className="space-y-6 text-right">
               <h1
-                className={`text-3xl font-bold text-gray-800 dark:text-gray-100 ${
+                className={`text-3xl font-bold text-gray-800 dark:text-gray-100 text-right ${
                   language === "ar" ? "text-right" : "text-left"
                 }`}
               >
