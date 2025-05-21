@@ -1,70 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IconWithBadge } from "./IconWithBadge";
 import { useAuth } from "../../../../shared/hooks/AuthContext";
 import { Button } from "primereact/button";
-import { userDataApi } from "../../../../../api/user/userDataApi";
 import { ThemeToggle } from "../../../../shared/components/ThemeToggle2";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFavorites } from "../../../../../store/slices/favoriteSlice";
+import { AppDispatch, RootState } from "../../../../../store/store";
 
 export const ActionIcons: React.FC = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [favoriteCount, setFavoriteCount] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const favoriteItems = useSelector(
+    (state: RootState) => state.favorites.items
+  );
+  // const cartItems = useSelector((state: RootState) => state.cart.items); // When you have cartSlice
+
+  const favoriteCount = favoriteItems.length;
+  // const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0); // Example for cart
+  const cartCount = 0; // Placeholder until cart slice is ready
 
   useEffect(() => {
     if (user?.email) {
-      setLoading(true);
-      const fetchCounts = async () => {
-        try {
-          const [favResponse, cartResponse] = await Promise.all([
-            userDataApi.getFavorites(user.email),
-            userDataApi.getCart(user.email),
-          ]);
-          setFavoriteCount(favResponse.length);
-          setCartCount(
-            cartResponse.reduce((sum, item) => sum + item.quantity, 0)
-          );
-        } catch (error) {
-          console.error("Error fetching user data counts:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchCounts();
-    } else {
-      setFavoriteCount(0);
-      setCartCount(0);
-      setLoading(false);
+      // Fetch initial favorites (and cart items) when user logs in or on mount
+      dispatch(fetchFavorites());
+      // dispatch(fetchCart());
     }
-  }, [user]);
+  }, [user, dispatch]);
 
-  const handleFavoritesClick = () => {
-    console.log("Favorites clicked - navigating");
-    navigate("/favorites"); // Navigate to the favorites page
-  };
-
-  const handleCartClick = () => {
-    console.log("Cart clicked - navigating");
-    navigate("/cart"); // Navigate to the cart page (we'll build this next)
-  };
-
+  const handleFavoritesClick = () => navigate("/favorites");
+  const handleCartClick = () => navigate("/cart");
   const handleLogout = () => {
     logout();
     navigate("/signin");
   };
 
-  if (loading && user) {
-    return (
-      <div className="flex items-center space-x-3 md:space-x-5">
-        <div className="p-link relative w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
-        <div className="p-link relative w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
-        <div className="p-link relative w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
-        <div className="p-link relative w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
-      </div>
-    );
-  }
+  // if (loading && user) {
+  //   return (
+  //     <div className="flex items-center space-x-3 md:space-x-5">
+  //       <div className="p-link relative w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+  //       <div className="p-link relative w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+  //       <div className="p-link relative w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+  //       <div className="p-link relative w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex items-center justify-around md:justify-start w-full md-w-auto pr-0 space-x-3 md:space-x-5">
