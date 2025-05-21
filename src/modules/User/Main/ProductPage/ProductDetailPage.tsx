@@ -114,7 +114,7 @@ export const ProductDetailPage: React.FC = () => {
         <RelatedProducts
           categoryId={product.categoryId}
           currentProductId={product.id}
-          className="mt-12 md:mt-16" // Add some top margin
+          className="mt-6 md:mt-6" // Add some top margin
         />
       </div>
       {isMobileMenuOpen && (
