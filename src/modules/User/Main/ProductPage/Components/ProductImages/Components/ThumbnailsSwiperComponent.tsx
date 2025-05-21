@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperCore } from "swiper";
 import { Navigation, Thumbs, FreeMode, A11y } from "swiper/modules";
-import { ProductImage } from "../../../../../../api/user/productData"; // Adjust path as needed
+import { ProductImage } from "../../../../../../../api/user/productData"; // Adjust path as needed
 
 interface ThumbnailsSwiperProps {
   images: (ProductImage & { id: string; altText: string })[];
@@ -48,7 +48,7 @@ export const ThumbnailsSwiperComponent: React.FC<ThumbnailsSwiperProps> = ({
           nextEl: thumbNextRef.current, // Use ref directly
           prevEl: thumbPrevRef.current, // Use ref directly
         }}
-        className="w-full md:my-1 vertical-thumbnails-swiper"
+        className="w-full md:my-1 vertical-thumbnails-swiper min-h-0 flex-1"
         // Important: Re-initialize navigation when refs are available
         // Swiper might initialize before refs are assigned to buttons.
         // A common pattern is to update swiper params after mount.
@@ -69,7 +69,7 @@ export const ThumbnailsSwiperComponent: React.FC<ThumbnailsSwiperProps> = ({
           <SwiperSlide
             key={image.id || `thumb-desktop-${index}`}
             onClick={() => onThumbnailClick(index)}
-            className={`w-full aspect-square rounded-md overflow-hidden cursor-pointer border-2 transition-all
+            className={`swiper-slide-vertical-thumb aspect-square rounded-md overflow-hidden cursor-pointer border-2 transition-all
               ${
                 currentSlideIndex === index
                   ? "border-orange-500 scale-105 opacity-100"

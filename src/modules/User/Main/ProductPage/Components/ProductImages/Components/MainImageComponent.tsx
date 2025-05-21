@@ -2,7 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperCore } from "swiper";
 import { Navigation, Thumbs, A11y } from "swiper/modules";
-import { ProductImage } from "../../../../../../api/user/productData"; // Adjust path as needed
+import { ProductImage } from "../../../../../../../api/user/productData"; // Adjust path as needed
 
 interface MainImageProps {
   images: (ProductImage & { id: string; altText: string })[];
@@ -38,7 +38,7 @@ export const MainImageComponent: React.FC<MainImageProps> = ({
         onSlideChange={onSlideChange}
         loop={images.length > 1}
         dir={isRtl ? "rtl" : "ltr"}
-        className="w-full h-full rounded-lg shadow-lg bg-gray-100 dark:bg-gray-700"
+        className="w-full aspect-h-4 aspect-w-3 h-full rounded-lg shadow-lg bg-gray-100 dark:bg-gray-700"
       >
         {images.map((image, index) => (
           <SwiperSlide
