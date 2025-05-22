@@ -1,10 +1,14 @@
 // src/modules/User/ProductPage/components/ProductActions.tsx
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Product } from "../../../../../../api/user/productData"; // Adjust path
 import { AddToCartButton } from "./Components/AddToCartButton";
 import { FavoriteToggleButton } from "./Components/FavoriteToggleButton";
 //import { ProductVariants } from "./Components/ProductVariants";
 import { QuantityInput } from "./Components/QuantityInput";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../../../../store/store";
+import { Toast } from "primereact/toast";
+import { addProductToCart } from "../../../../../../store/slices/cartSlice";
 
 interface ProductActionsProps {
   product: Product;
@@ -15,32 +19,21 @@ interface ProductActionsProps {
 
 export const ProductActions: React.FC<ProductActionsProps> = ({
   product,
-  // isFavoriteInitial = false, // Example
-  // onToggleFavorite,
-  // onAddToCart
 }) => {
   const [quantity, setQuantity] = useState(1);
-  // Demo favorite state. In a real app, this would come from props or context.
   const [isFavorite, setIsFavorite] = useState(false); // useState(isFavoriteInitial);
-  // Demo selected variants state.
-  // const [selectedVariantOptions, setSelectedVariantOptions] = useState<
-  //   Record<string, string>
-  // >({});
+  const dispatch = useDispatch<AppDispatch>();
+  const toastRef = useRef<Toast>(null);
 
-  // const handleOptionSelect = (variantName: string, optionValue: string) => {
-  //   setSelectedVariantOptions((prev) => ({
-  //     ...prev,
-  //     [variantName]: optionValue,
-  //   }));
-  //   // Potentially reset quantity or check stock for new variant combination here
-  // };
-
-  const handleAddToCart = () => {
-    console.log(
-      `Add ${quantity} of ${product.name} to cart. Selected:`
-      //selectedVariantOptions
-    );
-    // onAddToCart?.(product.id, quantity, selectedVariantOptions);
+  const handleActualAddToCart = () => {
+    dispatch(addProductToCart({ product, quantity }))
+     .unwrap()
+      .then(() => {
+        toastRef.current?.show({severity:'success', summary: 'تمت الإضافة', detail: `${product.name} (x${quantity}) أضيف إلى السلة.`, life: 2000});
+      })
+      .catch((err) => {
+        toastRef.current?.show({severity:'error', summary: 'خطأ', detail: err.message || 'فشل في إضافة المنتج للسلة.', life: 3000});
+      });
   };
 
   const handleToggleFavorite = () => {

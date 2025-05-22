@@ -52,6 +52,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl group border border-transparent hover:border-orange-300 dark:hover:border-orange-600 flex flex-col h-full">
+      <Toast ref={toastRef} />
       <div className="relative">
         <Link to={`/product/${product.id}`} className="block group/link">
           <div className="aspect-w-11 aspect-h-12 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
