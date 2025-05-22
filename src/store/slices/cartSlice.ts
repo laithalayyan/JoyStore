@@ -52,28 +52,34 @@ export const fetchCart = createAsyncThunk(
       });
       const resolvedCartItems = await Promise.all(cartItemsPromises);
       return resolvedCartItems;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to fetch cart');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('Failed to fetch cart');
     }
   }
 );
 
 export const addProductToCart = createAsyncThunk(
   'cart/addProductToCart',
-  async ({ product, quantity }: { product: Product; quantity: number }, { rejectWithValue, getState }) => {
+  async ({ product, quantity }: { product: Product; quantity: number }, { rejectWithValue }) => {
     if (!MOCK_USER_ID) return rejectWithValue('User not authenticated');
     try {
       // Call API: userDataApi.addToCart expects ProductSummary.
       // We have full Product, so we create a ProductSummary from it.
-      const productSummary = { id: product.id, name: product.name, price: product.price, imageUrl: product.imageUrl, categoryId: product.categoryId, slug: (product as any).slug };
+      const productSummary = { id: product.id, name: product.name, price: product.price, imageUrl: product.imageUrl, categoryId: product.categoryId, slug: 'slug' in product ? product.slug : undefined, description: product.description };
       const response = await userDataApi.addToCart(MOCK_USER_ID, productSummary, quantity);
       if (response.success && response.item) {
         // Return data needed to update the Redux store
         return { product, quantity }; // Return the full product for Redux store
       }
       return rejectWithValue(response.error || 'Failed to add product to cart API');
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('An unknown error occurred');
     }
   }
 );
@@ -88,8 +94,11 @@ export const updateCartItemQuantity = createAsyncThunk(
         return { productId, quantity };
       }
       return rejectWithValue(response.error || 'Failed to update quantity API');
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('An unknown error occurred');
     }
   }
 );
@@ -104,8 +113,11 @@ export const removeProductFromCart = createAsyncThunk(
         return productId;
       }
       return rejectWithValue('Failed to remove product from cart API');
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('An unknown error occurred');
     }
   }
 );
