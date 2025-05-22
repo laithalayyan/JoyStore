@@ -50,6 +50,7 @@ export const ProductActions: React.FC<ProductActionsProps> = ({
 
   return (
     <div className="mt-6 space-y-6">
+      <Toast ref={toastRef} />
       {/* {product.variants && product.variants.length > 0 && (
         <ProductVariants
           variants={product.variants}
@@ -67,7 +68,7 @@ export const ProductActions: React.FC<ProductActionsProps> = ({
           onValueChange={handleQuantityChange}
           maxStock={product.stock}
         />
-        <AddToCartButton onClick={handleAddToCart} disabled={!canAddToCart} />
+        <AddToCartButton onClick={handleActualAddToCart} disabled={!canAddToCart} />
         <FavoriteToggleButton
           isFavorite={isFavorite}
           onClick={handleToggleFavorite}
