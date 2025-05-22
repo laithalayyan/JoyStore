@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Product } from "../../../../../../api/user/productData";
 import { useDispatch, useSelector } from "react-redux";
 import { removeProductFromFavorites, addProductToFavorites } from "../../../../../../store/slices/favoriteSlice";
 import { AppDispatch, RootState } from "../../../../../../store/store";
+import { addProductToCart } from "../../../../../../store/slices/cartSlice";
+import { Toast } from "primereact/toast";
 
 interface ProductCardProps {
   product: Product;
@@ -19,11 +21,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   // Get all favorite items from Redux store to check if this product is a favorite
   const favoriteItems = useSelector((state: RootState) => state.favorites.items);
   const isCurrentlyFavorite = favoriteItems.some(favProduct => favProduct.id === product.id);
+  const toastRef = useRef<Toast>(null); // For local toast if not using global
+
   const handleActualAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation(); // Prevent link navigation
-    console.log("Add to cart:", product.name, product.id);
-    // onAddToCart?.(product.id); // Call actual add to cart logic
+    e.stopPropagation();
+    dispatch(addProductToCart({ product, quantity: 1 })) // Add 1 quantity by default
+      .unwrap()
+      .then(() => {
+        toastRef.current?.show({severity:'success', summary: 'تمت الإضافة', detail: `${product.name} أضيف إلى السلة.`, life: 2000});
+      })
+      .catch((err) => {
+        toastRef.current?.show({severity:'error', summary: 'خطأ', detail: err.message || 'فشل في إضافة المنتج للسلة.', life: 3000});
+      });
   };
 
   const handleActualToggleFavorite = (e: React.MouseEvent) => {
