@@ -80,13 +80,17 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
         options?.state?.messages?.[0]; // Default to the first message
       const severity = currentMessage?.severity;
       return {
-        className: classNames("font-semibold text-sm sm:text-base", {
-          "dark:!text-white": severity === "success" || severity === "info",
-          "dark:!text-red-100": severity === "error", // Lighter red for text on dark red bg
-          "dark:!text-yellow-100": severity === "warn", // Lighter yellow for text on dark yellow bg
-          // Default text color for summary if not dark mode and not a specific severity
-          "text-gray-800": !document.documentElement.classList.contains("dark"),
-        }),
+        className: classNames(
+          "font-semibold text-lg sm:text-base lg:text-md md:text-md font-alexandria",
+          {
+            "dark:!text-white": severity === "success" || severity === "info",
+            "dark:!text-red-100": severity === "error", // Lighter red for text on dark red bg
+            "dark:!text-yellow-100": severity === "warn", // Lighter yellow for text on dark yellow bg
+            // Default text color for summary if not dark mode and not a specific severity
+            "text-gray-800":
+              !document.documentElement.classList.contains("dark"),
+          }
+        ),
       };
     },
     detail: (options?: ToastPassThroughMethodOptions) => {
@@ -94,13 +98,18 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
         options?.state?.messages?.[0];
       const severity = currentMessage?.severity;
       return {
-        className: classNames("mt-1 text-xs sm:text-sm", {
-          "dark:!text-gray-200": severity === "success" || severity === "info",
-          "dark:!text-red-200": severity === "error",
-          "dark:!text-yellow-200": severity === "warn",
-          // Default text color for detail if not dark mode and not a specific severity
-          "text-gray-600": !document.documentElement.classList.contains("dark"),
-        }),
+        className: classNames(
+          "mt-1 text-sm sm:text-sm lg:text-md md:text-md font-alexandria",
+          {
+            "dark:!text-gray-200":
+              severity === "success" || severity === "info",
+            "dark:!text-red-200": severity === "error",
+            "dark:!text-yellow-200": severity === "warn",
+            // Default text color for detail if not dark mode and not a specific severity
+            "text-gray-600":
+              !document.documentElement.classList.contains("dark"),
+          }
+        ),
       };
     },
     icon: (options?: ToastPassThroughMethodOptions) => {
