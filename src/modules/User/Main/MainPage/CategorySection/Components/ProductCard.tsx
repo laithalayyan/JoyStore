@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Product } from "../../../../../../api/user/productData";
 import { useDispatch, useSelector } from "react-redux";
-import { removeProductFromFavorites, addProductToFavorites } from "../../../../../../store/slices/favoriteSlice";
+import {
+  removeProductFromFavorites,
+  addProductToFavorites,
+} from "../../../../../../store/slices/favoriteSlice";
 import { AppDispatch, RootState } from "../../../../../../store/store";
 import { addProductToCart } from "../../../../../../store/slices/cartSlice";
 import { Toast } from "primereact/toast";
@@ -12,27 +15,46 @@ interface ProductCardProps {
   product: Product;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({
-  product,
-}) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   // const [isFavorite, setIsFavorite] = React.useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
   // Get all favorite items from Redux store to check if this product is a favorite
-  const favoriteItems = useSelector((state: RootState) => state.favorites.items);
-  const isCurrentlyFavorite = favoriteItems.some(favProduct => favProduct.id === product.id);
+  const favoriteItems = useSelector(
+    (state: RootState) => state.favorites.items
+  );
+  const { items: cartItems } = useSelector((state: RootState) => state.cart);
+
+  const isCurrentlyFavorite = favoriteItems.some(
+    (favProduct) => favProduct.id === product.id
+  );
   const toastRef = useRef<Toast>(null); // For local toast if not using global
+  const isCurrentlyInCart = cartItems.some(item => item.product.id === product.id);
 
   const handleActualAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (isCurrentlyInCart) {
+      toastRef.current?.show({ severity: 'info', summary: 'موجود بالفعل', detail: `${product.name} موجود بالفعل في السلة.`, life: 3000 });
+      return;
+    }
     dispatch(addProductToCart({ product, quantity: 1 })) // Add 1 quantity by default
       .unwrap()
       .then(() => {
-        toastRef.current?.show({severity:'success', summary: 'تمت الإضافة', detail: `${product.name} أضيف إلى السلة.`, life: 2000});
+        toastRef.current?.show({
+          severity: "success",
+          summary: "تمت الإضافة",
+          detail: `${product.name} أضيف إلى السلة.`,
+          life: 2000,
+        });
       })
       .catch((err) => {
-        toastRef.current?.show({severity:'error', summary: 'خطأ', detail: err.message || 'فشل في إضافة المنتج للسلة.', life: 3000});
+        toastRef.current?.show({
+          severity: "error",
+          summary: "خطأ",
+          detail: err.message || "فشل في إضافة المنتج للسلة.",
+          life: 3000,
+        });
       });
   };
 
@@ -52,7 +74,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl group border border-transparent hover:border-orange-300 dark:hover:border-orange-600 flex flex-col h-full">
-      <Toast ref={toastRef} />
+      <Toast ref={toastRef} position="bottom-center" />
       <div className="relative">
         <Link to={`/product/${product.id}`} className="block group/link">
           <div className="aspect-w-11 aspect-h-12 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">

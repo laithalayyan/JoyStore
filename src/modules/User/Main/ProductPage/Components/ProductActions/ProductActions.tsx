@@ -36,7 +36,7 @@ export const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
           severity: "success",
           summary: "تمت الإضافة",
           detail: `${product.name} (x${quantity}) أضيف إلى السلة.`,
-          life: 2000,
+          life: 1500,
         });
       })
       .catch((err) => {
