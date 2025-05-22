@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../../../store/store";
 import { fetchCart, clearCartLocal } from "../../../../store/slices/cartSlice"; // Add clearCartLocal
 import { useAuth } from "../../../shared/hooks/AuthContext";
+import { userDataApi } from "../../../../api/user/userDataApi";
 // import { userDataApi } from '../../../api/user/userDataApi'; // For direct API clear, thunk is better
 
 export const CartPage: React.FC = () => {
