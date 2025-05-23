@@ -12,6 +12,7 @@ import { fetchCart, clearCartLocal } from "../../../../store/slices/cartSlice"; 
 import { useAuth } from "../../../shared/hooks/AuthContext";
 import { userDataApi } from "../../../../api/user/userDataApi";
 import MobileMenu from "../SideBarCategories/MobileMenu";
+import CartPageHeader from "./Components/CartPageHeader";
 // import { userDataApi } from '../../../api/user/userDataApi'; // For direct API clear, thunk is better
 
 export const CartPage: React.FC = () => {
@@ -85,19 +86,10 @@ export const CartPage: React.FC = () => {
       {/* Mobile Menu Logic ... */}
 
       <main className="container mx-auto px-2 sm:px-4 lg:px-8 py-8 text-right rtl:text-right">
-        <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">
-            سلة التسوق
-          </h1>
-          {cartItems.length > 0 && (
-            <Button
-              label="إفراغ السلة"
-              icon="pi pi-trash"
-              className="p-button-danger p-button-outlined p-button-sm"
-              onClick={handleClearCart}
-            />
-          )}
-        </div>
+      <CartPageHeader
+        cartItems={cartItems}
+        handleClearCart={handleClearCart}
+      />
 
         {cartItems.length === 0 ? (
           <div className="text-center py-16">
