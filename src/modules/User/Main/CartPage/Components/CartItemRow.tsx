@@ -73,7 +73,7 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({ item }) => {
           showButtons
           buttonLayout="horizontal"
           step={1}
-          min={0} // Allow setting to 0 to trigger removal via update logic
+          min={1} // Allow setting to 0 to trigger removal via update logic
           max={item.product.stock || 100} // Use actual stock if available
           decrementButtonClassName="p-button-secondary p-button-sm !text-gray-600 dark:!text-gray-300 !border-gray-300 dark:!border-gray-600"
           incrementButtonClassName="p-button-secondary p-button-sm !text-gray-600 dark:!text-gray-300 !border-gray-300 dark:!border-gray-600"
@@ -88,9 +88,10 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({ item }) => {
       <div className="flex-shrink-0">
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-danger p-button-text p-button-sm"
+          className="p-button-rounded p-button-danger p-button-text p-button-md !text-red-600 hover:!text-red-800 transition-colors duration-200"
           onClick={handleRemove}
           tooltip="إزالة"
+          tooltipOptions={{ position: "top" }}
         />
       </div>
     </div>

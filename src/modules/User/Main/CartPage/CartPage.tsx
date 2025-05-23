@@ -82,7 +82,6 @@ export const CartPage: React.FC = () => {
         onMobileMenuToggle={toggleMobileMenu}
         isMobileMenuOpen={isMobileMenuOpen}
       />
-      {/* Mobile Menu Logic ... */}
 
       <main className="container mx-auto px-2 sm:px-4 lg:px-8 py-8 text-right rtl:text-right">
         <CartPageHeader
@@ -94,13 +93,9 @@ export const CartPage: React.FC = () => {
           <EmptyCartPage />
         ) : (
           <div className="lg:flex lg:gap-8 items-start">
-            {/* Cart Items List */}
             <CartItemsList cartItems={cartItems} />
 
-            {/* Cart Summary (Sidebar on larger screens) */}
             <div className="lg:w-1/3 lg:sticky lg:top-28">
-              {" "}
-              {/* top-28 assumes header height of 5rem + some space */}
               <CartSummary items={cartItems} />
             </div>
           </div>

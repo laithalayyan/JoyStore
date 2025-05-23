@@ -15,7 +15,8 @@ const CartItemsList: React.FC<CartItemsListProps> = ({ cartItems }) => {
         <div className="flex-grow">الوصف</div>
         <div className="w-32 text-center">الكمية</div>
         <div className="w-24 text-center">الإجمالي</div>
-        <div className="w-12 text-center"></div> {/* For remove button */}
+        <div className="w-12 text-center"></div>{" "}
+        {/* For remove button */}
       </div>
       {cartItems.map((item) => (
         <CartItemRow key={item.product.id} item={item} />
