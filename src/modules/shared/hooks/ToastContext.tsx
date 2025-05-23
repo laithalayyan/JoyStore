@@ -88,7 +88,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     },
     closeButton: {
       className:
-        "p-toast-icon-close p-link ml-auto rtl:mr-auto rtl:ml-0 self-start !w-7 !h-7 rounded-full  hover:!bg-gray-100  focus:!ring-1 focus:!ring-orange-500",
+        "p-toast-icon-close p-link ml-auto rtl:mr-auto rtl:ml-0 self-start !w-7 !h-7 rounded-full hover:!bg-gray-200  focus:!ring-1 focus:!ring-orange-500",
     },
   };
 
