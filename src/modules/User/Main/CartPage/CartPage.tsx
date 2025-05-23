@@ -1,7 +1,6 @@
 // src/modules/User/CartPage/CartPage.tsx
 import React, { useEffect, useState } from "react";
 import { Header } from "../../Main/Header/Header"; // Adjust path
-import { CartItemRow } from "./Components/CartItemRow";
 import { CartSummary } from "./Components/CartSummary";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -12,6 +11,7 @@ import { userDataApi } from "../../../../api/user/userDataApi";
 import MobileMenu from "../SideBarCategories/MobileMenu";
 import CartPageHeader from "./Components/CartPageHeader";
 import EmptyCartPage from "./Components/EmptyCartPage";
+import CartItemsList from "./Components/CartItemsList";
 // import { userDataApi } from '../../../api/user/userDataApi'; // For direct API clear, thunk is better
 
 export const CartPage: React.FC = () => {
@@ -85,32 +85,17 @@ export const CartPage: React.FC = () => {
       {/* Mobile Menu Logic ... */}
 
       <main className="container mx-auto px-2 sm:px-4 lg:px-8 py-8 text-right rtl:text-right">
-      <CartPageHeader
-        cartItems={cartItems}
-        handleClearCart={handleClearCart}
-      />
+        <CartPageHeader
+          cartItems={cartItems}
+          handleClearCart={handleClearCart}
+        />
 
         {cartItems.length === 0 ? (
           <EmptyCartPage />
         ) : (
           <div className="lg:flex lg:gap-8 items-start">
             {/* Cart Items List */}
-            <div className="lg:w-2/3 bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
-              {/* Table Header (Optional) */}
-              <div className="hidden sm:flex px-2 py-3 bg-gray-50 dark:bg-gray-700 text-xs font-semibold text-gray-600 dark:text-gray-300 border-b dark:border-gray-600">
-                <div className="w-24 flex-shrink-0 mr-4 rtl:ml-4 rtl:mr-0">
-                  المنتج
-                </div>
-                <div className="flex-grow">الوصف</div>
-                <div className="w-32 text-center">الكمية</div>
-                <div className="w-24 text-center">الإجمالي</div>
-                <div className="w-12 text-center"></div>{" "}
-                {/* For remove button */}
-              </div>
-              {cartItems.map((item) => (
-                <CartItemRow key={item.product.id} item={item} />
-              ))}
-            </div>
+            <CartItemsList cartItems={cartItems} />
 
             {/* Cart Summary (Sidebar on larger screens) */}
             <div className="lg:w-1/3 lg:sticky lg:top-28">
