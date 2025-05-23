@@ -57,56 +57,38 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     text: () => ({
       className: "ml-3 rtl:mr-3 rtl:ml-0 flex-1",
     }),
-    summary: (options?: ToastPassThroughMethodOptions) => {
-      const currentMessage: ToastMessage | undefined =
-        options?.state?.messages?.[0];
-      const severity = currentMessage?.severity;
+    summary: () => {
       return {
         className: classNames(
-          "font-semibold text-lg sm:text-base lg:text-md md:text-md font-alexandria",
+          "font-semibold text-lg sm:text-base lg:text-md md:text-md font-alexandria text-gray-800",
           {
-            "dark:!text-white": severity === "success" || severity === "info",
-            "dark:!text-red-100": severity === "error",
-            "dark:!text-yellow-100": severity === "warn",
+            // "dark:!text-white": severity === "success" || severity === "info",
+            // "dark:!text-red-100": severity === "error",
+            // "dark:!text-yellow-100": severity === "warn",
             "text-gray-800":
               !document.documentElement.classList.contains("dark"),
           }
         ),
       };
     },
-    detail: (options?: ToastPassThroughMethodOptions) => {
-      const currentMessage: ToastMessage | undefined =
-        options?.state?.messages?.[0];
-      const severity = currentMessage?.severity;
+    detail: () => {
       return {
         className: classNames(
-          "mt-1 text-sm sm:text-sm lg:text-md md:text-md font-alexandria",
-          {
-            "dark:!text-gray-200":
-              severity === "success" || severity === "info",
-            "dark:!text-red-200": severity === "error",
-            "dark:!text-yellow-200": severity === "warn",
-            "text-gray-600":
-              !document.documentElement.classList.contains("dark"),
-          }
+          "mt-1 text-sm sm:text-sm lg:text-md md:text-md font-alexandria text-gray-800"
         ),
       };
     },
-    icon: (options?: ToastPassThroughMethodOptions) => {
-      const currentMessage: ToastMessage | undefined =
-        options?.state?.messages?.[0];
-      const severity = currentMessage?.severity;
+    icon: () => {
+      //const currentMessage: ToastMessage | undefined =
+      //  options?.state?.messages?.[0];
+      //const severity = currentMessage?.severity;
       return {
-        className: classNames("text-lg sm:text-xl", {
-          "dark:!text-white": severity === "success" || severity === "info",
-          "dark:!text-red-100": severity === "error",
-          "dark:!text-yellow-100": severity === "warn",
-        }),
+        className: classNames("text-lg sm:text-xl"),
       };
     },
     closeButton: {
       className:
-        "p-toast-icon-close p-link ml-auto rtl:mr-auto rtl:ml-0 self-start !w-7 !h-7 rounded-full dark:!text-gray-300 hover:!bg-gray-100 dark:hover:!bg-gray-700 focus:!ring-1 focus:!ring-orange-500",
+        "p-toast-icon-close p-link ml-auto rtl:mr-auto rtl:ml-0 self-start !w-7 !h-7 rounded-full  hover:!bg-gray-100  focus:!ring-1 focus:!ring-orange-500",
     },
   };
 
