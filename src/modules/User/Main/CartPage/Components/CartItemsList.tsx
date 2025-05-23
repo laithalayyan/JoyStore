@@ -11,11 +11,11 @@ const CartItemsList: React.FC<CartItemsListProps> = ({ cartItems }) => {
     <div className="lg:w-2/3 bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
       {/* Table Header (Optional) */}
       <div className="hidden sm:flex px-2 py-3 bg-gray-50 dark:bg-gray-700 text-xs font-semibold text-gray-600 dark:text-gray-300 border-b dark:border-gray-600">
-        <div className="w-24 flex-shrink-0 mr-4 rtl:ml-4 rtl:mr-0">المنتج</div>
-        <div className="flex-grow">الوصف</div>
-        <div className="w-32 text-center">الكمية</div>
-        <div className="w-24 text-center">الإجمالي</div>
-        <div className="w-12 text-center"></div>{" "}
+        <div className="w-24 flex-shrink-0 pr-1 rtl:ml-0 rtl:mr-0">المنتج</div>
+        <div className="flex-grow text-right pr-1">الوصف</div>
+        <div className="w-32 text-right pr-1">الكمية</div>
+        <div className="w-24 text-right pr-1">الإجمالي</div>
+        <div className="w-12 text-center pr-1"></div>{" "}
         {/* For remove button */}
       </div>
       {cartItems.map((item) => (
