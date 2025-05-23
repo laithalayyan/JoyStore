@@ -6,22 +6,25 @@ import { ThemeProvider } from "./modules/shared/hooks/ThemeContext.tsx";
 import { LanguageProvider } from "./modules/shared/hooks/LanguageContext";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./modules/shared/hooks/AuthContext.tsx";
-import { store } from './store/store';
-import {Provider} from 'react-redux';
+import { store } from "./store/store";
+import { Provider } from "react-redux";
+import { ToastProvider } from "./modules/shared/hooks/ToastContext.tsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <BrowserRouter>
-      <ThemeProvider>
-        <LanguageProvider>
-          <AuthProvider>
-            <App />
-          </AuthProvider>
-        </LanguageProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+      <BrowserRouter>
+        <ThemeProvider>
+          <LanguageProvider>
+            <AuthProvider>
+              <ToastProvider>
+                <App />
+              </ToastProvider>
+            </AuthProvider>
+          </LanguageProvider>
+        </ThemeProvider>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

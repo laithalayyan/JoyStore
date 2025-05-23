@@ -7,6 +7,7 @@ import { ThemeToggle } from "../../../../shared/components/ThemeToggle2";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFavorites } from "../../../../../store/slices/favoriteSlice";
 import { AppDispatch, RootState } from "../../../../../store/store";
+import { fetchCart } from "../../../../../store/slices/cartSlice";
 
 export const ActionIcons: React.FC = () => {
   const { user, logout } = useAuth();
@@ -16,17 +17,16 @@ export const ActionIcons: React.FC = () => {
   const favoriteItems = useSelector(
     (state: RootState) => state.favorites.items
   );
-  // const cartItems = useSelector((state: RootState) => state.cart.items); // When you have cartSlice
 
   const favoriteCount = favoriteItems.length;
-  // const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0); // Example for cart
-  const cartCount = 0; // Placeholder until cart slice is ready
+  const cartItems = useSelector((state: RootState) => state.cart.items); // Get cart items
 
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0); 
   useEffect(() => {
     if (user?.email) {
       // Fetch initial favorites (and cart items) when user logs in or on mount
       dispatch(fetchFavorites());
-      // dispatch(fetchCart());
+      dispatch(fetchCart());
     }
   }, [user, dispatch]);
 

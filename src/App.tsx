@@ -13,6 +13,7 @@ import { CategoryPage } from "./modules/User/Main/CategoryPage/CategoryPage";
 import { ProductDetailPage } from "./modules/User/Main/ProductPage/ProductDetailPage";
 import { FavoritesPage } from "./modules/User/Main/FavoritesPage/FavoritesPage";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { CartPage } from "./modules/User/Main/CartPage/CartPage";
 
 function App() {
   const toast = useRef<Toast>(null);
@@ -31,6 +32,7 @@ function App() {
           <Route path="/category/:categorySlug" element={<CategoryPage />} />
           <Route path="/product/:productId" element={<ProductDetailPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Route>
 
         <Route element={<AdminRoute />}>

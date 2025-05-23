@@ -1,10 +1,15 @@
 // src/modules/User/ProductPage/components/ProductActions.tsx
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Product } from "../../../../../../api/user/productData"; // Adjust path
 import { AddToCartButton } from "./Components/AddToCartButton";
 import { FavoriteToggleButton } from "./Components/FavoriteToggleButton";
 //import { ProductVariants } from "./Components/ProductVariants";
 import { QuantityInput } from "./Components/QuantityInput";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../../../store/store";
+import { Toast } from "primereact/toast";
+import { addProductToCart } from "../../../../../../store/slices/cartSlice";
+import { addProductToFavorites, removeProductFromFavorites } from "../../../../../../store/slices/favoriteSlice";
 
 interface ProductActionsProps {
   product: Product;
@@ -13,41 +18,46 @@ interface ProductActionsProps {
   // onAddToCart?: (productId: string | number, quantity: number, selectedVariants: Record<string, string>) => void; // For real cart action
 }
 
-export const ProductActions: React.FC<ProductActionsProps> = ({
-  product,
-  // isFavoriteInitial = false, // Example
-  // onToggleFavorite,
-  // onAddToCart
-}) => {
+export const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
-  // Demo favorite state. In a real app, this would come from props or context.
-  const [isFavorite, setIsFavorite] = useState(false); // useState(isFavoriteInitial);
-  // Demo selected variants state.
-  // const [selectedVariantOptions, setSelectedVariantOptions] = useState<
-  //   Record<string, string>
-  // >({});
+  // const [isFavorite, setIsFavorite] = useState(false); // useState(isFavoriteInitial);
+  const dispatch = useDispatch<AppDispatch>();
+  const toastRef = useRef<Toast>(null);
+  const favoriteItems = useSelector((state: RootState) => state.favorites.items);
 
-  // const handleOptionSelect = (variantName: string, optionValue: string) => {
-  //   setSelectedVariantOptions((prev) => ({
-  //     ...prev,
-  //     [variantName]: optionValue,
-  //   }));
-  //   // Potentially reset quantity or check stock for new variant combination here
-  // };
+  const isCurrentlyFavorite = favoriteItems.some(favProduct => favProduct.id === product.id);
 
-  const handleAddToCart = () => {
-    console.log(
-      `Add ${quantity} of ${product.name} to cart. Selected:`
-      //selectedVariantOptions
-    );
-    // onAddToCart?.(product.id, quantity, selectedVariantOptions);
+
+  const handleActualAddToCart = () => {
+    dispatch(addProductToCart({ product, quantity }))
+      .unwrap()
+      .then(() => {
+        toastRef.current?.show({
+          severity: "success",
+          summary: "تمت الإضافة",
+          detail: `${product.name} (x${quantity}) أضيف إلى السلة.`,
+          life: 1500,
+        });
+      })
+      .catch((err) => {
+        toastRef.current?.show({
+          severity: "error",
+          summary: "خطأ",
+          detail: err.message || "فشل في إضافة المنتج للسلة.",
+          life: 3000,
+        });
+      });
   };
 
-  const handleToggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    console.log("Toggle favorite for product:", product.id);
-    // onToggleFavorite?.(product.id);
-  };
+  const handleActualToggleFavorite = (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (isCurrentlyFavorite) {
+        dispatch(removeProductFromFavorites(product.id));
+      } else {
+        dispatch(addProductToFavorites(product)); // Pass the full product object
+      }
+    };
 
   const handleQuantityChange = (newQuantity: number) => {
     setQuantity(newQuantity);
@@ -55,8 +65,11 @@ export const ProductActions: React.FC<ProductActionsProps> = ({
 
   const canAddToCart = product.stock !== undefined && product.stock > 0;
 
+  
+
   return (
     <div className="mt-6 space-y-6">
+      <Toast ref={toastRef} />
       {/* {product.variants && product.variants.length > 0 && (
         <ProductVariants
           variants={product.variants}
@@ -74,10 +87,13 @@ export const ProductActions: React.FC<ProductActionsProps> = ({
           onValueChange={handleQuantityChange}
           maxStock={product.stock}
         />
-        <AddToCartButton onClick={handleAddToCart} disabled={!canAddToCart} />
+        <AddToCartButton
+          onClick={handleActualAddToCart}
+          disabled={!canAddToCart}
+        />
         <FavoriteToggleButton
-          isFavorite={isFavorite}
-          onClick={handleToggleFavorite}
+          isFavorite={isCurrentlyFavorite}
+          onClick={handleActualToggleFavorite}
         />
       </div>
       {/* <ProductShippingInfoTable /> */}

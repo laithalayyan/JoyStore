@@ -38,7 +38,7 @@ export const MainImageComponent: React.FC<MainImageProps> = ({
         onSlideChange={onSlideChange}
         loop={images.length > 1}
         dir={isRtl ? "rtl" : "ltr"}
-        className="w-full aspect-h-4 aspect-w-3 h-full rounded-lg shadow-lg bg-gray-100 dark:bg-gray-700"
+        className=" h-full rounded-lg shadow-lg bg-gray-100 dark:bg-gray-700"
       >
         {images.map((image, index) => (
           <SwiperSlide
@@ -48,7 +48,7 @@ export const MainImageComponent: React.FC<MainImageProps> = ({
             <img
               src={image.url}
               alt={image.altText || productName}
-              className="block w-full h-full object-cover rounded-md"
+              className="block h-full w-full object-cover rounded-md"
             />
           </SwiperSlide>
         ))}
