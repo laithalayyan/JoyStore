@@ -1,8 +1,6 @@
 // src/modules/User/CartPage/CartPage.tsx
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Header } from "../../Main/Header/Header"; // Adjust path
-import { Button } from "primereact/button";
 import { CartItemRow } from "./Components/CartItemRow";
 import { CartSummary } from "./Components/CartSummary";
 
@@ -13,6 +11,7 @@ import { useAuth } from "../../../shared/hooks/AuthContext";
 import { userDataApi } from "../../../../api/user/userDataApi";
 import MobileMenu from "../SideBarCategories/MobileMenu";
 import CartPageHeader from "./Components/CartPageHeader";
+import EmptyCartPage from "./Components/EmptyCartPage";
 // import { userDataApi } from '../../../api/user/userDataApi'; // For direct API clear, thunk is better
 
 export const CartPage: React.FC = () => {
@@ -92,22 +91,7 @@ export const CartPage: React.FC = () => {
       />
 
         {cartItems.length === 0 ? (
-          <div className="text-center py-16">
-            <i className="pi pi-shopping-cart text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
-            <p className="text-xl text-gray-700 dark:text-gray-300 mb-2">
-              سلة التسوق فارغة.
-            </p>
-            <p className="text-gray-500 dark:text-gray-400 mb-6">
-              لم تقم بإضافة أي منتجات إلى السلة بعد.
-            </p>
-            <Link to="/">
-              <Button
-                label="ابدأ التسوق"
-                icon="pi pi-arrow-left rtl:pi-arrow-right"
-                className="p-button-orange"
-              />
-            </Link>
-          </div>
+          <EmptyCartPage />
         ) : (
           <div className="lg:flex lg:gap-8 items-start">
             {/* Cart Items List */}
