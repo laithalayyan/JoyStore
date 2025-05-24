@@ -74,13 +74,13 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({ item }) => {
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-between sm:justify-end flex-wrap gap-x-3 gap-y-2 w-full sm:w-auto sm:flex-grow sm:space-x-3 rtl:sm:space-x-reverse">
+      <div className="flex items-center justify-between flex-wrap gap-x-3 gap-y-2 w-full sm:w-auto sm:flex-grow sm:space-x-3 rtl:sm:space-x-reverse">
         <p className="sm:hidden text-xs text-gray-600 dark:text-gray-400 flex-shrink-0">
           <span>سعر الوحدة: </span>
           <span className="font-sans">₪</span>
           {item.product.price.toFixed(2)}
         </p>
-        <div className="w-32 sm:w-28 lg:w-44 flex-shrink-0 order-2 sm:order-none">
+        <div className="w-32 sm:w-28 lg:w-38 flex-shrink-0 order-2 sm:order-none">
           <InputNumber
             value={item.quantity}
             onValueChange={handleQuantityChange}
